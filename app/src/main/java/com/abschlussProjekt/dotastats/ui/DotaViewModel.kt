@@ -17,4 +17,8 @@ class DotaViewModel(application: Application) : AndroidViewModel(application) {
     fun getRecentProMatches() {
         viewModelScope.launch(Dispatchers.IO) { repository.getRecentProMatches() }
     }
+
+    fun getMatchById() {
+        viewModelScope.launch(Dispatchers.IO) { repository.getMatchById(7340499325) }
+    }
 }
