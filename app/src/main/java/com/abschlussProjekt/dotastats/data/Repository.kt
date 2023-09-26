@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.abschlussProjekt.dotastats.data.datamodels.ProMatch
+import com.abschlussProjekt.dotastats.data.datamodels.ProMatchDetail
 
 private const val TAG = "Repository"
 
@@ -12,6 +13,12 @@ class Repository(private val apiService: OpenDotaApiService) {
     private val _recentProMatches = MutableLiveData<List<ProMatch>>()
     val recentProMatches: LiveData<List<ProMatch>>
         get() = _recentProMatches
+
+    private val _detailProMatch  = MutableLiveData<ProMatchDetail>()
+    val detailProMatch : LiveData<ProMatchDetail>
+        get() = _detailProMatch
+
+
 
     suspend fun getRecentProMatches() {
         try {
@@ -24,9 +31,7 @@ class Repository(private val apiService: OpenDotaApiService) {
     suspend fun getMatchById(id: Long) {
         try {
             val matchDetail = apiService.getMatchById(id)
-            matchDetail.players.forEach{
-                Log.d("MatchById", it.toString())
-            }
+            _detailProMatch.postValue(matchDetail)
 
         } catch (ex: Exception) {
             Log.e("$TAG-getMatchById", "Error loading data from api: $ex")

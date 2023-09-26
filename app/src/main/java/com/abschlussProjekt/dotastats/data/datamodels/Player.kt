@@ -2,6 +2,7 @@ package com.abschlussProjekt.dotastats.data.datamodels
 
 data class Player(
     val personaname: String,
+    val name : String?,
     val match_id: Long,
     val account_id: Long,
     val isRadiant: Boolean,

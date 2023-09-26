@@ -41,15 +41,15 @@ class RecentMatchesAdapter(val dataset: List<ProMatch>) :
 
             durationTV.text = getMatchDuration(match.duration)
             if (match.radiant_win) {
-                radientWinIV.visibility = View.VISIBLE
+                radiantWinIV.visibility = View.VISIBLE
                 direWinIV.visibility = View.INVISIBLE
             } else {
-                radientWinIV.visibility = View.INVISIBLE
+                radiantWinIV.visibility = View.INVISIBLE
                 direWinIV.visibility = View.VISIBLE
             }
 
             constraintLayout.setOnClickListener {
-            it.findNavController().navigate(RecentMatchesFragmentDirections.actionRecentMatchesFragmentToMatchDetailFragment())
+            it.findNavController().navigate(RecentMatchesFragmentDirections.actionRecentMatchesFragmentToMatchDetailFragment(match.match_id))
             }
         }
     }

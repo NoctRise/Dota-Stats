@@ -11,7 +11,7 @@ data class ProMatchDetail(
     val game_mode: Int,
     val leagueid: Long,
 //    val pick_bans,
-    val radiant_gold_adv: List<Int>,
+    val radiant_gold_adv: List<Int>?,
     val radiant_score: Int,
     val radiant_team_id: Long,
     val radiant_win: Boolean,

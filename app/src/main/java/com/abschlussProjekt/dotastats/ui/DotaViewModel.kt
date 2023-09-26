@@ -14,11 +14,13 @@ class DotaViewModel(application: Application) : AndroidViewModel(application) {
 
     val recentProMatches = repository.recentProMatches
 
+    val detailProMatch = repository.detailProMatch
+
     fun getRecentProMatches() {
         viewModelScope.launch(Dispatchers.IO) { repository.getRecentProMatches() }
     }
 
-    fun getMatchById() {
-        viewModelScope.launch(Dispatchers.IO) { repository.getMatchById(7340499325) }
+    fun getMatchById(matchID : Long) {
+        viewModelScope.launch(Dispatchers.IO) { repository.getMatchById(matchID) }
     }
 }
