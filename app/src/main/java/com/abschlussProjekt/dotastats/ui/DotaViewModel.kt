@@ -5,22 +5,30 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.abschlussProjekt.dotastats.data.OpenDotaApi
 import com.abschlussProjekt.dotastats.data.Repository
+import com.abschlussProjekt.dotastats.data.database.getInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class DotaViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository = Repository(OpenDotaApi.retrofitService)
+    private val database = getInstance(application)
+    private val repository = Repository(OpenDotaApi.retrofitService, database)
 
     val recentProMatches = repository.recentProMatches
 
     val detailProMatch = repository.detailProMatch
 
+    init {
+        initDB()
+    }
+
+    private fun initDB() = viewModelScope.launch(Dispatchers.IO) { repository.initDB() }
+
     fun getRecentProMatches() {
         viewModelScope.launch(Dispatchers.IO) { repository.getRecentProMatches() }
     }
 
-    fun getMatchById(matchID : Long) {
+    fun getMatchById(matchID: Long) {
         viewModelScope.launch(Dispatchers.IO) { repository.getMatchById(matchID) }
     }
 }

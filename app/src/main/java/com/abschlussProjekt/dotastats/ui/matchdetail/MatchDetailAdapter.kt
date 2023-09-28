@@ -34,10 +34,14 @@ class MatchDetailAdapter(val dataset: List<Player>) :
         val player = dataset[position]
 
         with(holder.binding) {
-            stringItemTV.text = if (player.name?.isNotBlank() == true)
-                player.name
-            else
-                player.personaname
+            stringItemTV.text =
+                when {
+                    player.name?.isNotBlank() == true -> player.name
+                    player.personaname?.isNotBlank() == true -> player.personaname
+                    else -> "Anonymous"
+                }
+
+
         }
     }
 }

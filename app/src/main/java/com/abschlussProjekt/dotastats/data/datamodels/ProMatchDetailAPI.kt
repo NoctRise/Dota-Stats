@@ -1,6 +1,6 @@
 package com.abschlussProjekt.dotastats.data.datamodels
 
-data class ProMatchDetail(
+data class ProMatchDetailAPI(
     val match_id: Long,
     val barracks_status_dire: Int,
     val barracks_status_radiant: Int,

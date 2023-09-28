@@ -37,6 +37,5 @@ class MatchDetailFragment : Fragment() {
             binding.direTeamRC.adapter = MatchDetailAdapter(it.players.takeLast(5))
             Log.e("MDF", it.toString())
         }
-
     }
 }
