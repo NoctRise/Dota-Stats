@@ -1,7 +1,6 @@
 package com.abschlussProjekt.dotastats.ui.matchdetail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +34,6 @@ class MatchDetailFragment : Fragment() {
         viewModel.detailProMatch.observe(viewLifecycleOwner) {
             binding.radiantTeamRC.adapter = MatchDetailAdapter(it.players.take(5))
             binding.direTeamRC.adapter = MatchDetailAdapter(it.players.takeLast(5))
-            Log.e("MDF", it.toString())
         }
     }
 }

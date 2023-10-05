@@ -1,4 +1,4 @@
-package com.abschlussProjekt.dotastats.data.datamodels.constants
+package com.abschlussProjekt.dotastats.data.datamodels.db.constants
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

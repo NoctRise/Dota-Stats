@@ -3,11 +3,11 @@ package com.abschlussProjekt.dotastats.ui.matchdetail
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.abschlussProjekt.dotastats.data.datamodels.Player
+import com.abschlussProjekt.dotastats.data.datamodels.api.PlayerAPI
 import com.abschlussProjekt.dotastats.databinding.DetailMatchListItemBinding
 
 
-class MatchDetailAdapter(val dataset: List<Player>) :
+class MatchDetailAdapter(val dataset: List<PlayerAPI>) :
     RecyclerView.Adapter<MatchDetailAdapter.ItemViewHolder>() {
 
     inner class ItemViewHolder(val binding: DetailMatchListItemBinding) :

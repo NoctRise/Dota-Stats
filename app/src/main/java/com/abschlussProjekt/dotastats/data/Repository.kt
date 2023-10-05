@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.abschlussProjekt.dotastats.data.database.DotaStatsDatabase
-import com.abschlussProjekt.dotastats.data.datamodels.ProMatch
-import com.abschlussProjekt.dotastats.data.datamodels.ProMatchDetailAPI
+import com.abschlussProjekt.dotastats.data.datamodels.db.AdvantageEXP
+import com.abschlussProjekt.dotastats.data.datamodels.db.AdvantageGold
+import com.abschlussProjekt.dotastats.data.datamodels.api.ProMatchAPI
+import com.abschlussProjekt.dotastats.data.datamodels.api.ProMatchDetailAPI
 
 private const val TAG = "Repository"
 
@@ -14,8 +16,8 @@ class Repository(
     private val database: DotaStatsDatabase
 ) {
 
-    private val _recentProMatches = MutableLiveData<List<ProMatch>>()
-    val recentProMatches: LiveData<List<ProMatch>>
+    private val _recentProMatches = MutableLiveData<List<ProMatchAPI>>()
+    val recentProMatches: LiveData<List<ProMatchAPI>>
         get() = _recentProMatches
 
     private val _detailProMatch = MutableLiveData<ProMatchDetailAPI>()
@@ -35,9 +37,52 @@ class Repository(
     // Hole MatchDetails per ID
     suspend fun getMatchById(id: Long) {
         try {
-            val matchDetail = apiService.getMatchById(id)
-            _detailProMatch.postValue(matchDetail)
+            val matchDetailAPI = apiService.getMatchById(id)
+            Log.e("DB Match", matchDetailAPI.toProMatchDetailDB().toString())
+            Log.e("Gold Vorteil", matchDetailAPI.radiant_gold_adv.toString())
+            _detailProMatch.postValue(matchDetailAPI)
 
+            // MatchDetailAPI als MatchDetailDB in DB abspeichern
+            database.dotaStatsDao.insertProMatchDetailDB(matchDetailAPI.toProMatchDetailDB())
+            Log.e("DB Match", matchDetailAPI.toProMatchDetailDB().toString())
+
+            // Goldvorteil in DB speichern
+            matchDetailAPI.radiant_gold_adv?.forEachIndexed { minute, gold ->
+                database.dotaStatsDao.insertAdvantageGold(
+                    AdvantageGold(
+                        matchDetailAPI.match_id,
+                        minute,
+                        gold
+                    )
+                )
+            }
+            // EXPvorteil in DB speichern
+            matchDetailAPI.radiant_xp_adv?.forEachIndexed { minute, exp ->
+                database.dotaStatsDao.insertAdvantageEXP(
+                    AdvantageEXP(
+                        matchDetailAPI.match_id,
+                        minute,
+                        exp
+                    )
+                )
+            }
+
+
+            matchDetailAPI.players.forEach {
+                database.dotaStatsDao.insertPlayer(it.toPlayerDB())
+            }
+
+            Log.e("MATCH", database.dotaStatsDao.getMatchByID(matchDetailAPI.match_id).toString())
+            Log.e(
+                "Radiant",
+                database.dotaStatsDao.getMatchByID(matchDetailAPI.match_id).players.filter { it.isRadiant }
+                    .sortedBy { it.player_slot }.toString()
+            )
+            Log.e(
+                "Dire",
+                database.dotaStatsDao.getMatchByID(matchDetailAPI.match_id).players.filter { !it.isRadiant }
+                    .sortedBy { it.player_slot }.toString()
+            )
         } catch (ex: Exception) {
             Log.e("$TAG-getMatchById", "Error loading data from api: $ex")
         }

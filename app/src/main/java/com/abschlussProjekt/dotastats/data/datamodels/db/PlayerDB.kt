@@ -1,12 +1,20 @@
-package com.abschlussProjekt.dotastats.data.datamodels
+package com.abschlussProjekt.dotastats.data.datamodels.db
 
-data class Player(
+import androidx.room.Entity
+
+@Entity(
+    tableName = "Player",
+    primaryKeys = ["match_id", "account_id"]
+)
+data class PlayerDB(
     val personaname: String?,
-    val name : String?,
+    val name: String?,
     val match_id: Long,
     val account_id: Long,
     val isRadiant: Boolean,
-    val ability_upgrades_arr: List<Int>,
+    val player_slot : Int,
+
+    //val ability_upgrades_arr: List<Int>?,
     val kills: Int,
     val deaths: Int,
     val assists: Int,
@@ -15,6 +23,7 @@ data class Player(
     val xp_per_min: Int,
     val hero_damage: Int,
     val hero_healing: Int,
+
     val hero_id: Long,
     val level: Int,
 
@@ -31,15 +40,8 @@ data class Player(
 
     val last_hits: Int,
     val net_worth: Int,
-    val permanent_buffs: List<PermanentBuff>,
+//    val permanent_buffs: List<PermanentBuff>,
 
-    val purchase_time: MutableMap<String, Int>,
-    val purchase_log: List<ItemPurchase>,
-    val tower_damage: Int,
-
-
-//    val xp_t : List<Int>,
-//    val gold_t: List<Int>,
-//    val lh_t : List<Int>,
-
+    //val purchase_log: List<ItemPurchase>?,
+    val tower_damage: Int
 )

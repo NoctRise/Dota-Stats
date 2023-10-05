@@ -1,6 +1,6 @@
-package com.abschlussProjekt.dotastats.data.datamodels
+package com.abschlussProjekt.dotastats.data.datamodels.api
 
-data class ProMatch(
+data class ProMatchAPI(
     val match_id: Long,
     val duration: Int,
     val start_time: Long,
