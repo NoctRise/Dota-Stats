@@ -1,6 +1,6 @@
-package com.abschlussProjekt.dotastats.data.datamodels.api
+package com.abschlussProjekt.dotastats.data.datamodels
 
-data class ProMatchAPI(
+data class ProMatch(
     val match_id: Long,
     val duration: Int,
     val start_time: Long,
@@ -10,8 +10,6 @@ data class ProMatchAPI(
     val dire_name: String?,
     val leagueid: Long,
     val league_name: String,
-    val series_id: Long,
-    val series_type: Int,
     val radiant_score: Int,
     val dire_score: Int,
     val radiant_win: Boolean

@@ -30,10 +30,14 @@ class MatchDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val matchID = requireArguments().getLong("id")
         viewModel.getMatchById(matchID)
+        binding.radiantTeamRC.setHasFixedSize(true)
+        binding.direTeamRC.setHasFixedSize(true)
 
         viewModel.detailProMatch.observe(viewLifecycleOwner) {
-            binding.radiantTeamRC.adapter = MatchDetailAdapter(it.players.take(5))
-            binding.direTeamRC.adapter = MatchDetailAdapter(it.players.takeLast(5))
+            binding.detailRadiantTV.text = it.radiant_team?.name ?: "Radiant"
+            binding.direDetailTV.text = it.dire_team?.name ?: "Dire"
+            binding.radiantTeamRC.adapter = MatchDetailContainerAdapter(it.players.take(5))
+            binding.direTeamRC.adapter = MatchDetailContainerAdapter(it.players.takeLast(5))
         }
     }
 }

@@ -1,6 +1,6 @@
-package com.abschlussProjekt.dotastats.data.datamodels.api
+package com.abschlussProjekt.dotastats.data.datamodels
 
-data class TeamAPI (
+data class Team (
     val team_id : Long,
     val name : String,
     val tag : String,

@@ -1,4 +1,4 @@
-package com.abschlussProjekt.dotastats.data.datamodels.api
+package com.abschlussProjekt.dotastats.data.datamodels
 
 data class ItemPurchase(
     val time : Int,

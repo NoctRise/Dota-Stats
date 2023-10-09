@@ -1,10 +1,10 @@
 package com.abschlussProjekt.dotastats.data
 
-import com.abschlussProjekt.dotastats.data.datamodels.api.ProMatchAPI
-import com.abschlussProjekt.dotastats.data.datamodels.api.ProMatchDetailAPI
-import com.abschlussProjekt.dotastats.data.datamodels.db.constants.Ability
-import com.abschlussProjekt.dotastats.data.datamodels.db.constants.Hero
-import com.abschlussProjekt.dotastats.data.datamodels.db.constants.Item
+import com.abschlussProjekt.dotastats.data.datamodels.ProMatch
+import com.abschlussProjekt.dotastats.data.datamodels.ProMatchDetailAPI
+import com.abschlussProjekt.dotastats.data.datamodels.constants.Ability
+import com.abschlussProjekt.dotastats.data.datamodels.constants.Hero
+import com.abschlussProjekt.dotastats.data.datamodels.constants.Item
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
@@ -30,7 +30,7 @@ private val retrofit =
 interface OpenDotaApiService {
 
     @GET("proMatches")
-    suspend fun getRecentProMatches(): List<ProMatchAPI>
+    suspend fun getRecentProMatches(): List<ProMatch>
 
     @GET("matches/{id}")
     suspend fun getMatchById(@Path("id") id: Long): ProMatchDetailAPI

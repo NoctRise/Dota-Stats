@@ -5,11 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.abschlussProjekt.dotastats.data.datamodels.api.ProMatchAPI
+import com.abschlussProjekt.dotastats.data.datamodels.ProMatch
 import com.abschlussProjekt.dotastats.databinding.MatchListItemBinding
 import com.abschlussProjekt.dotastats.util.getMatchDuration
 
-class RecentMatchesAdapter(val dataset: List<ProMatchAPI>) :
+class RecentMatchesAdapter(val dataset: List<ProMatch>) :
     RecyclerView.Adapter<RecentMatchesAdapter.ItemViewHolder>() {
 
     inner class ItemViewHolder(val binding: MatchListItemBinding) :

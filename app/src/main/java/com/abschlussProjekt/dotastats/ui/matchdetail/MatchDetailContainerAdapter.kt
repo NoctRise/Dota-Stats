@@ -1,24 +1,23 @@
 package com.abschlussProjekt.dotastats.ui.matchdetail
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.abschlussProjekt.dotastats.data.datamodels.constants.Item
-import com.abschlussProjekt.dotastats.databinding.DetailMatchListItemBinding
+import com.abschlussProjekt.dotastats.data.datamodels.Player
+import com.abschlussProjekt.dotastats.databinding.DetailMatchListItemContainerBinding
 
 
-class MatchDetailAdapter(val dataset: List<*>) :
-    RecyclerView.Adapter<MatchDetailAdapter.ItemViewHolder>() {
+class MatchDetailContainerAdapter(val dataset: List<Player>) :
+    RecyclerView.Adapter<MatchDetailContainerAdapter.ItemViewHolder>() {
 
-    inner class ItemViewHolder(val binding: DetailMatchListItemBinding) :
+    inner class ItemViewHolder(val binding: DetailMatchListItemContainerBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
-            DetailMatchListItemBinding.inflate(
+            DetailMatchListItemContainerBinding.inflate(
                 LayoutInflater.from(
                     parent
                         .context
@@ -32,14 +31,9 @@ class MatchDetailAdapter(val dataset: List<*>) :
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = dataset[position]
+        val player = dataset[position]
 
-        when (item) {
-            is Item -> holder.binding.stringItemTV.text = item.name
-            !is List<*> -> holder.binding.stringItemTV.text = item.toString()
-            else -> holder.binding.stringItemTV.text = "Items"
-        }
-
+        holder.binding.detailMatchRV.adapter = MatchDetailAdapter(player.toList())
 
     }
 }

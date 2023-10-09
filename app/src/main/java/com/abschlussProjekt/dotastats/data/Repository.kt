@@ -4,24 +4,24 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.abschlussProjekt.dotastats.data.database.DotaStatsDatabase
-import com.abschlussProjekt.dotastats.data.datamodels.db.AdvantageEXP
-import com.abschlussProjekt.dotastats.data.datamodels.db.AdvantageGold
-import com.abschlussProjekt.dotastats.data.datamodels.api.ProMatchAPI
-import com.abschlussProjekt.dotastats.data.datamodels.api.ProMatchDetailAPI
+import com.abschlussProjekt.dotastats.data.datamodels.Player
+import com.abschlussProjekt.dotastats.data.datamodels.ProMatch
+import com.abschlussProjekt.dotastats.data.datamodels.ProMatchDetail
+import com.abschlussProjekt.dotastats.data.datamodels.constants.Ability
+import com.abschlussProjekt.dotastats.data.datamodels.constants.Item
 
 private const val TAG = "Repository"
 
 class Repository(
-    private val apiService: OpenDotaApiService,
-    private val database: DotaStatsDatabase
+    private val apiService: OpenDotaApiService, private val database: DotaStatsDatabase
 ) {
 
-    private val _recentProMatches = MutableLiveData<List<ProMatchAPI>>()
-    val recentProMatches: LiveData<List<ProMatchAPI>>
+    private val _recentProMatches = MutableLiveData<List<ProMatch>>()
+    val recentProMatches: LiveData<List<ProMatch>>
         get() = _recentProMatches
 
-    private val _detailProMatch = MutableLiveData<ProMatchDetailAPI>()
-    val detailProMatch: LiveData<ProMatchDetailAPI>
+    private val _detailProMatch = MutableLiveData<ProMatchDetail>()
+    val detailProMatch: LiveData<ProMatchDetail>
         get() = _detailProMatch
 
 
@@ -38,56 +38,73 @@ class Repository(
     suspend fun getMatchById(id: Long) {
         try {
             val matchDetailAPI = apiService.getMatchById(id)
-            Log.e("DB Match", matchDetailAPI.toProMatchDetailDB().toString())
-            Log.e("Gold Vorteil", matchDetailAPI.radiant_gold_adv.toString())
-            _detailProMatch.postValue(matchDetailAPI)
 
-            // MatchDetailAPI als MatchDetailDB in DB abspeichern
-            database.dotaStatsDao.insertProMatchDetailDB(matchDetailAPI.toProMatchDetailDB())
-            Log.e("DB Match", matchDetailAPI.toProMatchDetailDB().toString())
+            // Iteriere durch die Playerliste und füge die Heroes und die Abilities hinzu
+            val playerList = mutableListOf<Player>()
 
-            // Goldvorteil in DB speichern
-            matchDetailAPI.radiant_gold_adv?.forEachIndexed { minute, gold ->
-                database.dotaStatsDao.insertAdvantageGold(
-                    AdvantageGold(
-                        matchDetailAPI.match_id,
-                        minute,
-                        gold
+            matchDetailAPI.players.forEach { player ->
+                val hero = database.dotaStatsDao.getHeroByID(player.hero_id)
+                Log.e("Hero", hero.toString())
+                val abilities = mutableMapOf<Long, Ability>()
+                val playerAbilities = mutableListOf<Ability>()
+
+
+                player.ability_upgrades_arr.forEach { abilityID ->
+                    if (!abilities.containsKey(abilityID)) {
+                        val ability = database.dotaStatsDao.getAbilityByID(abilityID)
+                        playerAbilities.add(ability)
+                        abilities[abilityID] = ability
+                    } else abilities[abilityID]?.let { ability -> playerAbilities.add(ability) }
+                }
+
+
+                val inventory = getPlayerItems(
+                    player.item_0,
+                    player.item_1,
+                    player.item_2,
+                    player.item_3,
+                    player.item_4,
+                    player.item_5
+                )
+//                Log.e("Ability", playerAbilities.toString())
+//                Log.e("Items", inventory.map { it?.name }.toString())
+
+                val backpack = getPlayerItems(player.backpack0, player.backpack1, player.backpack2)
+                val neutralItem = getPlayerItems(player.item_neutral).first()
+
+
+                playerList.add(
+                    player.toPLayer(
+                        playerAbilities, hero, inventory, backpack, neutralItem
                     )
                 )
             }
-            // EXPvorteil in DB speichern
-            matchDetailAPI.radiant_xp_adv?.forEachIndexed { minute, exp ->
-                database.dotaStatsDao.insertAdvantageEXP(
-                    AdvantageEXP(
-                        matchDetailAPI.match_id,
-                        minute,
-                        exp
-                    )
-                )
-            }
 
 
-            matchDetailAPI.players.forEach {
-                database.dotaStatsDao.insertPlayer(it.toPlayerDB())
-            }
-
-            Log.e("MATCH", database.dotaStatsDao.getMatchByID(matchDetailAPI.match_id).toString())
-            Log.e(
-                "Radiant",
-                database.dotaStatsDao.getMatchByID(matchDetailAPI.match_id).players.filter { it.isRadiant }
-                    .sortedBy { it.player_slot }.toString()
-            )
-            Log.e(
-                "Dire",
-                database.dotaStatsDao.getMatchByID(matchDetailAPI.match_id).players.filter { !it.isRadiant }
-                    .sortedBy { it.player_slot }.toString()
-            )
+            _detailProMatch.postValue(matchDetailAPI.toProMatchDetail(playerList))
+            Log.e("Match", matchDetailAPI.toProMatchDetail(playerList).toString())
         } catch (ex: Exception) {
             Log.e("$TAG-getMatchById", "Error loading data from api: $ex")
         }
     }
 
+
+    private val itemList = mutableMapOf<Long, Item>()
+    private fun getPlayerItems(vararg items: Long?): List<Item?> {
+        val itemList = mutableListOf<Item?>()
+
+        items.forEach { item ->
+            item?.let {
+                itemList.add(getItemByID(item))
+            }
+        }
+        return itemList
+    }
+
+    // Suche nach Item per itemID
+    private fun getItemByID(itemID: Long): Item =
+        if (!itemList.containsKey(itemID)) database.dotaStatsDao.getItemByID(itemID)
+        else itemList[itemID]!!
 
     suspend fun initDB() {
         // Wenn Datenbank keine Einträge hat, initialisiere sie mit Daten
@@ -109,13 +126,7 @@ class Repository(
             }.toMap()
 
             // Hole alle Abilities
-            var abilities = apiService.getAbilities()
-
-            // Lösche Abilities, deren Name & Image nicht vorhanden sind
-            abilities = abilities.filter {
-                it.value.name?.isNotBlank() == true &&
-                        it.value.img != null
-            }
+            val abilities = apiService.getAbilities()
 
             // Iteriere durch die Map und füge die ID's den Abilities hinzu
             abilities.forEach {
