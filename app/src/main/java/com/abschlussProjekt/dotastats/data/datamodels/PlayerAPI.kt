@@ -3,6 +3,7 @@ package com.abschlussProjekt.dotastats.data.datamodels
 import com.abschlussProjekt.dotastats.data.datamodels.constants.Ability
 import com.abschlussProjekt.dotastats.data.datamodels.constants.Hero
 import com.abschlussProjekt.dotastats.data.datamodels.constants.Item
+import com.squareup.moshi.Json
 
 data class PlayerAPI(
     val personaname: String?,
@@ -30,8 +31,11 @@ data class PlayerAPI(
     val item_4: Long?,
     val item_5: Long?,
     val item_neutral: Long?,
+    @Json(name = "backpack_0")
     val backpack0: Long?,
+    @Json(name = "backpack_1")
     val backpack1: Long?,
+    @Json(name = "backpack_2")
     val backpack2: Long?,
 
     val last_hits: Int,

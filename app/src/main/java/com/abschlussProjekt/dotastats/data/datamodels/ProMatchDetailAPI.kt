@@ -20,7 +20,7 @@ data class ProMatchDetailAPI(
     val dire_team: Team?,
     val players: List<PlayerAPI>
 ) {
-    fun toProMatchDetail(player: List<Player>) = ProMatchDetail(
+    fun toProMatchDetail(playerList: List<Player>) = ProMatchDetail(
         match_id,
         duration,
         radiant_score,
@@ -33,6 +33,6 @@ data class ProMatchDetailAPI(
         start_time,
         radiant_team,
         dire_team,
-        player
+        playerList
     )
 }

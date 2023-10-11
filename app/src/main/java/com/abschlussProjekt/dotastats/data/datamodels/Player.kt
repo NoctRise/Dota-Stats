@@ -26,7 +26,7 @@ data class Player(
 
     val inventory: List<Item?>,
     val item_neutral: Item?,
-    val backpack : List<Item?>,
+    val backpack: List<Item?>,
 
     val last_hits: Int,
     val net_worth: Int,
@@ -35,27 +35,3 @@ data class Player(
     val purchase_log: List<ItemPurchase>?,
     val tower_damage: Int
 )
-{
-    fun toList() : List<*> =
-        listOf(when {
-            name?.isNotBlank() == true -> name
-            personaname?.isNotBlank() == true -> personaname
-            else -> "Anonymous"
-        },
-            level,
-            kills,
-            deaths,
-            assists,
-            last_hits,
-            denies,
-            net_worth,
-            gold_per_min,
-            xp_per_min,
-            hero_damage,
-            tower_damage,
-            hero_healing,
-            inventory,
-            backpack,
-            item_neutral
-            )
-}

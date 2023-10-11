@@ -27,14 +27,22 @@
                 android:layout_marginBottom="16dp"
                 android:text="@string/radiant" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/radiantTeamRC"
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="32dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" >
+                android:scrollbars="none"
+                >
 
-            </androidx.recyclerview.widget.RecyclerView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/radiantTeamRC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="32dp"
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </HorizontalScrollView>
 
             <TextView
                 android:id="@+id/direDetailTV"
@@ -44,11 +52,18 @@
                 android:layout_marginBottom="16dp"
                 android:text="@string/dire" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/direTeamRC"
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:scrollbars="none"
+                >
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/direTeamRC"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            </HorizontalScrollView>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

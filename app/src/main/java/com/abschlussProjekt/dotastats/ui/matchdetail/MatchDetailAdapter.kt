@@ -2,13 +2,18 @@ package com.abschlussProjekt.dotastats.ui.matchdetail
 
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.abschlussProjekt.dotastats.data.datamodels.constants.Item
+import coil.load
+import coil.transform.RoundedCornersTransformation
+import com.abschlussProjekt.dotastats.data.datamodels.Player
 import com.abschlussProjekt.dotastats.databinding.DetailMatchListItemBinding
+import com.abschlussProjekt.dotastats.util.getFormattedValue
+import com.abschlussProjekt.dotastats.util.res_url
 
 
-class MatchDetailAdapter(val dataset: List<*>) :
+class MatchDetailAdapter(val dataset: List<Player>) :
     RecyclerView.Adapter<MatchDetailAdapter.ItemViewHolder>() {
 
     inner class ItemViewHolder(val binding: DetailMatchListItemBinding) :
@@ -32,12 +37,51 @@ class MatchDetailAdapter(val dataset: List<*>) :
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = dataset[position]
+        val player = dataset[position]
 
-        when (item) {
-            is Item -> holder.binding.stringItemTV.text = item.name
-            !is List<*> -> holder.binding.stringItemTV.text = item.toString()
-            else -> holder.binding.stringItemTV.text = "Items"
+        with(holder.binding) {
+            playerNameTV.text = when {
+                player.name?.isNotBlank() == true -> player.name
+                player.personaname?.isNotBlank() == true -> player.personaname
+                else -> "Anonymous"
+            }
+
+            heroIV.load(res_url + player.hero.img)
+            levelTV.text = player.level.toString()
+            killsTV.text = player.kills.toString()
+            deathsTV.text = player.deaths.toString()
+            assistsTV.text = player.assists.toString()
+            lastHitDeniesTV.text = "${player.last_hits}/${player.denies}"
+            networthTV.text = getFormattedValue(player.net_worth)
+            gxpmTV.text = "${getFormattedValue(player.gold_per_min)}/${getFormattedValue(player.xp_per_min)}"
+            heroDMGTV.text = getFormattedValue(player.hero_damage)
+            towerDMGTV.text = getFormattedValue(player.tower_damage)
+            heroHealingTV.text = getFormattedValue(player.hero_healing)
+
+            val inventoryList = listOf(item0IV, item1IV, item2IV, item3IV, item4IV, item5IV)
+
+            player.inventory.forEachIndexed { index, item ->
+                item?.let {
+                    inventoryList[index].visibility = View.VISIBLE
+                    inventoryList[index].load(res_url + item.img)
+                }
+            }
+
+            player.item_neutral?.let {
+                neutralItemIV.visibility = View.VISIBLE
+                neutralItemIV.load(res_url + it.img) {
+                    transformations(RoundedCornersTransformation(75f))
+                }
+            }
+
+            val backpackList = listOf(backpack0IV, backpack1IV, backpack2IV)
+            player.backpack.forEachIndexed { index, item ->
+                item?.let {
+                    backpackList[index].visibility = View.VISIBLE
+                    backpackList[index].load(res_url + item.img)
+                }
+            }
+
         }
 
 

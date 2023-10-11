@@ -44,7 +44,6 @@ class Repository(
 
             matchDetailAPI.players.forEach { player ->
                 val hero = database.dotaStatsDao.getHeroByID(player.hero_id)
-                Log.e("Hero", hero.toString())
                 val abilities = mutableMapOf<Long, Ability>()
                 val playerAbilities = mutableListOf<Ability>()
 
@@ -66,12 +65,9 @@ class Repository(
                     player.item_4,
                     player.item_5
                 )
-//                Log.e("Ability", playerAbilities.toString())
-//                Log.e("Items", inventory.map { it?.name }.toString())
 
                 val backpack = getPlayerItems(player.backpack0, player.backpack1, player.backpack2)
                 val neutralItem = getPlayerItems(player.item_neutral).first()
-
 
                 playerList.add(
                     player.toPLayer(
@@ -83,6 +79,7 @@ class Repository(
 
             _detailProMatch.postValue(matchDetailAPI.toProMatchDetail(playerList))
             Log.e("Match", matchDetailAPI.toProMatchDetail(playerList).toString())
+            Log.e("Purchase",matchDetailAPI.toProMatchDetail(playerList).players.map { it.purchase_log }.toString())
         } catch (ex: Exception) {
             Log.e("$TAG-getMatchById", "Error loading data from api: $ex")
         }
