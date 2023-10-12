@@ -79,7 +79,7 @@ class Repository(
 
             _detailProMatch.postValue(matchDetailAPI.toProMatchDetail(playerList))
             Log.e("Match", matchDetailAPI.toProMatchDetail(playerList).toString())
-            Log.e("Purchase",matchDetailAPI.toProMatchDetail(playerList).players.map { it.purchase_log }.toString())
+
         } catch (ex: Exception) {
             Log.e("$TAG-getMatchById", "Error loading data from api: $ex")
         }

@@ -36,8 +36,8 @@ class MatchDetailFragment : Fragment() {
         viewModel.detailProMatch.observe(viewLifecycleOwner) {
             binding.detailRadiantTV.text = it.radiant_team?.name ?: "Radiant"
             binding.direDetailTV.text = it.dire_team?.name ?: "Dire"
-            binding.radiantTeamRC.adapter = MatchDetailAdapter(it.players.take(5))
-            binding.direTeamRC.adapter = MatchDetailAdapter(it.players.takeLast(5))
+            binding.radiantTeamRC.adapter = MatchDetailAdapter(listOf(null) + it.players.take(5))
+            binding.direTeamRC.adapter = MatchDetailAdapter(listOf(null) + it.players.takeLast(5))
         }
     }
 }
