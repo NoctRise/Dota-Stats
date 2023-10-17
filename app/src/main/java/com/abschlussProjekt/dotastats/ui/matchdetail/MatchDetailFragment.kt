@@ -24,8 +24,6 @@ class MatchDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val matchID = requireArguments().getLong("id")
-        viewModel.getMatchById(matchID)
         binding.radiantTeamRV.setHasFixedSize(true)
         binding.direTeamRV.setHasFixedSize(true)
 
@@ -40,4 +38,6 @@ class MatchDetailFragment : Fragment() {
 
         return binding.root
     }
+
+
 }
