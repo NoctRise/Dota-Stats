@@ -7,7 +7,7 @@
     android:layout_height="50dp"
     android:overScrollMode="never"
     android:padding="4dp"
-    android:background="@drawable/layoutborder"
+    android:background="@drawable/layout_border"
     >
 
     <ImageView
@@ -28,6 +28,7 @@
         android:layout_marginStart="8dp"
         android:ellipsize="end"
         android:maxWidth="150dp"
+        android:textColor="@color/light_blue"
         android:maxLines="1"
         android:minWidth="150dp"
         android:text="TextView"
@@ -88,6 +89,9 @@
         app:layout_constraintBottom_toBottomOf="@+id/assistsTV"
         app:layout_constraintStart_toEndOf="@+id/assistsTV"
         app:layout_constraintTop_toTopOf="@+id/assistsTV" />
+
+
+
 
     <TextView
         android:id="@+id/networthTV"

@@ -23,4 +23,9 @@
             android:name="id"
             app:argType="long" />
     </fragment>
+    <fragment
+        android:id="@+id/teamRankingFragment"
+        android:name="com.abschlussProjekt.dotastats.ui.teamranking.TeamRankingFragment"
+        android:label="fragment_team_ranking"
+        tools:layout="@layout/fragment_team_ranking" />
 </navigation>

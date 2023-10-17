@@ -2,6 +2,7 @@ package com.abschlussProjekt.dotastats.data
 
 import com.abschlussProjekt.dotastats.data.datamodels.ProMatch
 import com.abschlussProjekt.dotastats.data.datamodels.ProMatchDetailAPI
+import com.abschlussProjekt.dotastats.data.datamodels.ProTeam
 import com.abschlussProjekt.dotastats.data.datamodels.constants.Ability
 import com.abschlussProjekt.dotastats.data.datamodels.constants.Hero
 import com.abschlussProjekt.dotastats.data.datamodels.constants.Item
@@ -34,6 +35,9 @@ interface OpenDotaApiService {
 
     @GET("matches/{id}")
     suspend fun getMatchById(@Path("id") id: Long): ProMatchDetailAPI
+
+    @GET("teams")
+    suspend fun getTeams(): List<ProTeam>
 
 
     // Constants

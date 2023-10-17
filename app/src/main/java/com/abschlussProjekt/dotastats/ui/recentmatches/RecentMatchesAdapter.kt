@@ -7,9 +7,12 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.abschlussProjekt.dotastats.data.datamodels.ProMatch
 import com.abschlussProjekt.dotastats.databinding.MatchListItemBinding
+import com.abschlussProjekt.dotastats.ui.DotaViewModel
 import com.abschlussProjekt.dotastats.util.getMatchDuration
 
-class RecentMatchesAdapter(val dataset: List<ProMatch>) :
+class RecentMatchesAdapter(
+    private val dataset: List<ProMatch>
+) :
     RecyclerView.Adapter<RecentMatchesAdapter.ItemViewHolder>() {
 
     inner class ItemViewHolder(val binding: MatchListItemBinding) :
@@ -49,7 +52,13 @@ class RecentMatchesAdapter(val dataset: List<ProMatch>) :
             }
 
             constraintLayout.setOnClickListener {
-            it.findNavController().navigate(RecentMatchesFragmentDirections.actionRecentMatchesFragmentToMatchDetailFragment(match.match_id))
+
+
+                it.findNavController().navigate(
+                    RecentMatchesFragmentDirections.actionRecentMatchesFragmentToMatchDetailFragment(
+                        match.match_id
+                    )
+                )
             }
         }
     }

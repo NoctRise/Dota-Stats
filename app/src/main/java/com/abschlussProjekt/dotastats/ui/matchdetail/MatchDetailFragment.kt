@@ -24,20 +24,20 @@ class MatchDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val matchID = requireArguments().getLong("id")
         viewModel.getMatchById(matchID)
-        binding.radiantTeamRC.setHasFixedSize(true)
-        binding.direTeamRC.setHasFixedSize(true)
+        binding.radiantTeamRV.setHasFixedSize(true)
+        binding.direTeamRV.setHasFixedSize(true)
 
         viewModel.detailProMatch.observe(viewLifecycleOwner) {
             binding.detailRadiantTV.text = it.radiant_team?.name ?: "Radiant"
             binding.direDetailTV.text = it.dire_team?.name ?: "Dire"
-            binding.radiantTeamRC.adapter = MatchDetailAdapter(listOf(null) + it.players.take(5))
-            binding.direTeamRC.adapter = MatchDetailAdapter(listOf(null) + it.players.takeLast(5))
+            binding.radiantTeamRV.adapter =
+                MatchDetailAdapter(listOf(null) + it.players.take(5), requireContext())
+            binding.direTeamRV.adapter =
+                MatchDetailAdapter(listOf(null) + it.players.takeLast(5), requireContext())
         }
+
+        return binding.root
     }
 }

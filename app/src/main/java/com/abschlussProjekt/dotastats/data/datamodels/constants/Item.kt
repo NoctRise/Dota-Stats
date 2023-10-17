@@ -11,6 +11,4 @@ data class Item(
     @Json(name = "dname")
     val name: String?,
     val img: String
-
-
 )

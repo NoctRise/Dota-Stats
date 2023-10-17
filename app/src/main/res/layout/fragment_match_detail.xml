@@ -32,12 +32,14 @@
                 android:scrollbars="none">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/radiantTeamRC"
+                    android:id="@+id/radiantTeamRV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="32dp"
                     android:overScrollMode="never"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/detail_match_list_item">
 
                 </androidx.recyclerview.widget.RecyclerView>
             </HorizontalScrollView>
@@ -55,13 +57,18 @@
                 android:scrollbars="none">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/direTeamRC"
+                    android:id="@+id/direTeamRV"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:overScrollMode="never"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/detail_match_list_item">
+
+                </androidx.recyclerview.widget.RecyclerView>
             </HorizontalScrollView>
 
         </LinearLayout>
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

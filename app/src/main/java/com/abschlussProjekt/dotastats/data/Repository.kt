@@ -7,6 +7,7 @@ import com.abschlussProjekt.dotastats.data.database.DotaStatsDatabase
 import com.abschlussProjekt.dotastats.data.datamodels.Player
 import com.abschlussProjekt.dotastats.data.datamodels.ProMatch
 import com.abschlussProjekt.dotastats.data.datamodels.ProMatchDetail
+import com.abschlussProjekt.dotastats.data.datamodels.ProTeam
 import com.abschlussProjekt.dotastats.data.datamodels.constants.Ability
 import com.abschlussProjekt.dotastats.data.datamodels.constants.Item
 
@@ -23,6 +24,15 @@ class Repository(
     private val _detailProMatch = MutableLiveData<ProMatchDetail>()
     val detailProMatch: LiveData<ProMatchDetail>
         get() = _detailProMatch
+
+
+    private val _proTeams = MutableLiveData<List<ProTeam>>()
+    val proTeams: LiveData<List<ProTeam>>
+        get() = _proTeams
+
+    suspend fun getTeams() {
+        _proTeams.postValue(apiService.getTeams())
+    }
 
 
     // Hole neuste Pro Matches

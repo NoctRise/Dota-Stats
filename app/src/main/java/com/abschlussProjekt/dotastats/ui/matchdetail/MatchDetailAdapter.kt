@@ -1,10 +1,13 @@
 package com.abschlussProjekt.dotastats.ui.matchdetail
 
 
+import android.app.AlertDialog.Builder
+import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import androidx.annotation.RequiresApi
 import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -16,7 +19,7 @@ import com.abschlussProjekt.dotastats.util.getFormattedValue
 import com.abschlussProjekt.dotastats.util.res_url
 
 
-class MatchDetailAdapter(val dataset: List<*>) :
+class MatchDetailAdapter(private val dataset: List<*>, private val context: Context) :
     RecyclerView.Adapter<MatchDetailAdapter.ItemViewHolder>() {
 
     inner class ItemViewHolder(val binding: DetailMatchListItemBinding) :
@@ -39,13 +42,14 @@ class MatchDetailAdapter(val dataset: List<*>) :
         return dataset.size
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val player = dataset[position]
 
         with(holder.binding) {
             when (player) {
                 is Player -> {
-
+                    heroIV.setOnClickListener { showDialog(player) }
 
                     playerNameTV.text = when {
                         player.name?.isNotBlank() == true -> player.name
@@ -60,7 +64,6 @@ class MatchDetailAdapter(val dataset: List<*>) :
                     assistsTV.text = player.assists.toString()
                     lastHitDeniesTV.text = "${player.last_hits}/${player.denies}"
                     networthTV.text = getFormattedValue(player.net_worth)
-
                     gxpmTV.text =
                         "${getFormattedValue(player.gold_per_min)}/${getFormattedValue(player.xp_per_min)}"
                     heroDMGTV.text = getFormattedValue(player.hero_damage)
@@ -95,30 +98,50 @@ class MatchDetailAdapter(val dataset: List<*>) :
 
                 else -> {
 
-                    matchCL.background =
-                        ContextCompat.getColor(matchCL.context, R.color.blue).toDrawable()
-                    playerNameTV.text = "Player"
-                    heroIV.visibility = View.INVISIBLE
-                    levelTV.text = "Lvl"
-                    killsTV.text = "K"
-                    deathsTV.text = "D"
-                    assistsTV.text = "A"
-                    lastHitDeniesTV.text = "LH / D"
-                    networthTV.text = "NET"
+                    matchCL.background = context.getColor(R.color.blue).toDrawable()
 
-                    gxpmTV.text = "GPM/XMP"
-                    heroDMGTV.text = "HD"
-                    towerDMGTV.text = "TD"
-                    heroHealingTV.text = "HH"
+                    val viewList = listOf(
+                        playerNameTV,
+                        levelTV,
+                        killsTV,
+                        deathsTV,
+                        assistsTV,
+                        lastHitDeniesTV,
+                        networthTV,
+                        gxpmTV,
+                        heroDMGTV,
+                        towerDMGTV,
+                        heroHealingTV,
+                        inventoryTV,
+                        backpackTV
+                    )
+
+                    val nameList = context.resources.getStringArray(R.array.match_detail_title)
+                    val toolTipTextList =
+                        context.resources.getStringArray(R.array.match_detail_tooltip)
+                    viewList.forEachIndexed { index, textView ->
+                        textView.setTextColor(context.getColor(R.color.white))
+                        textView.text = nameList[index]
+                        textView.tooltipText = toolTipTextList[index]
+                    }
+
+                    heroIV.visibility = View.INVISIBLE
                     inventoryTV.visibility = View.VISIBLE
-                    inventoryTV.text = "Items"
                     backpackTV.visibility = View.VISIBLE
-                    backpackTV.text = "Backpack"
                 }
             }
 
         }
+    }
 
 
+    // TODO Dialog für Items
+    private fun showDialog(player: Player) {
+        val builder = Builder(context)
+        val newBind = DetailMatchListItemBinding.inflate(LayoutInflater.from(context))
+        newBind.playerNameTV.text = player.hero.name
+
+        builder.setView(newBind.root)
+        builder.create().show()
     }
 }

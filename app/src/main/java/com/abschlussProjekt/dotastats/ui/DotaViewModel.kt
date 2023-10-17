@@ -18,6 +18,8 @@ class DotaViewModel(application: Application) : AndroidViewModel(application) {
 
     val detailProMatch = repository.detailProMatch
 
+    val proTeams = repository.proTeams
+
     init {
         initDB()
     }
@@ -30,5 +32,9 @@ class DotaViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getMatchById(matchID: Long) {
         viewModelScope.launch(Dispatchers.IO) { repository.getMatchById(matchID) }
+    }
+
+    fun getTeams() {
+        viewModelScope.launch(Dispatchers.IO) { repository.getTeams() }
     }
 }

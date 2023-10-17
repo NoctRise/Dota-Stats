@@ -3,4 +3,40 @@
     <string name="radiant">Radiant</string>
     <string name="dire">Dire</string>
     <string name="duration">Duration</string>
+
+
+    <string-array name="match_detail_title">
+        <item>Player</item>
+        <item>Lvl</item>
+        <item>K</item>
+        <item>D</item>
+        <item>A</item>
+        <item>LH / D</item>
+        <item>NET</item>>
+        <item>GPM/XPM</item>
+        <item>HD</item>
+        <item>TD</item>
+        <item>HH</item>>
+        <item>Items</item>
+        <item>Backpack</item>
+    </string-array>
+
+
+    <string-array name="match_detail_tooltip">
+        <item>Name of the player</item>
+        <item>Level achieved by hero</item>
+        <item>Number of kills by hero</item>
+        <item>Number of deaths by hero</item>
+        <item>Number of assists by hero</item>
+        <item>Number of last hits by hero\nNumber of denied creeps</item>
+        <item>Hero\'s networth</item>
+        <item>Gold farmed per minute\nExperience gained per minute</item>
+        <item>Amount of damage dealt to heroes</item>
+        <item>Amount of damage dealt to towers</item>
+        <item>Amount of health restored to heroes</item>
+        <item>Items built</item>
+        <item>Items in backpack</item>
+    </string-array>
+
+
 </resources>
