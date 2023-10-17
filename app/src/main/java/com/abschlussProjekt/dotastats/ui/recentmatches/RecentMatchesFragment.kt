@@ -27,7 +27,7 @@ class RecentMatchesFragment : Fragment() {
         viewModel.getRecentProMatches()
 
         viewModel.recentProMatches.observe(viewLifecycleOwner) {
-            binding.matchRecyclerView.adapter = RecentMatchesAdapter(it,viewModel)
+            binding.matchRecyclerView.adapter = RecentMatchesAdapter(it)
         }
         return binding.root
     }
