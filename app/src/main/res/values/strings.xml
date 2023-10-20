@@ -37,6 +37,8 @@
         <item>Items built</item>
         <item>Items in backpack</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

@@ -31,9 +31,13 @@ class MatchDetailFragment : Fragment() {
             binding.detailRadiantTV.text = it.radiant_team?.name ?: "Radiant"
             binding.direDetailTV.text = it.dire_team?.name ?: "Dire"
             binding.radiantTeamRV.adapter =
-                MatchDetailAdapter(listOf(null) + it.players.take(5), requireContext())
+                MatchDetailAdapter(listOf(null) + it.players.take(5), requireContext(), viewModel)
             binding.direTeamRV.adapter =
-                MatchDetailAdapter(listOf(null) + it.players.takeLast(5), requireContext())
+                MatchDetailAdapter(
+                    listOf(null) + it.players.takeLast(5),
+                    requireContext(),
+                    viewModel
+                )
         }
 
         return binding.root

@@ -1,5 +1,7 @@
 package com.abschlussProjekt.dotastats.data
 
+import com.abschlussProjekt.dotastats.data.datamodels.PlayerProfileResponse
+import com.abschlussProjekt.dotastats.data.datamodels.PlayerRecentMatch
 import com.abschlussProjekt.dotastats.data.datamodels.ProMatch
 import com.abschlussProjekt.dotastats.data.datamodels.ProMatchDetailAPI
 import com.abschlussProjekt.dotastats.data.datamodels.ProTeam
@@ -39,6 +41,14 @@ interface OpenDotaApiService {
     @GET("teams")
     suspend fun getTeams(): List<ProTeam>
 
+    @GET("players/{id}")
+    suspend fun getPlayerProfileByID(@Path("id") accountID: Long): PlayerProfileResponse
+
+    @GET("players/{id}/wl")
+    suspend fun getPlayerWinLoseByID(@Path("id") accountID: Long): Map<String, Int>
+
+    @GET("players/{id}/recentMatches")
+    suspend fun getPlayerRecentMatchesByID(@Path("id") accountID: Long): List<PlayerRecentMatch>
 
     // Constants
     @GET("constants/items")

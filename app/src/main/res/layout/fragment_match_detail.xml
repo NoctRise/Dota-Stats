@@ -24,7 +24,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="@string/radiant" />
+                android:text="@string/radiant"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -49,7 +51,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="@string/dire" />
+                android:text="@string/dire"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
             <HorizontalScrollView
                 android:layout_width="match_parent"

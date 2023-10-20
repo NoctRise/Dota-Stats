@@ -4,22 +4,28 @@ package com.abschlussProjekt.dotastats.ui.matchdetail
 import android.app.AlertDialog.Builder
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.graphics.drawable.toDrawable
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.abschlussProjekt.dotastats.R
 import com.abschlussProjekt.dotastats.data.datamodels.Player
 import com.abschlussProjekt.dotastats.databinding.DetailMatchListItemBinding
+import com.abschlussProjekt.dotastats.ui.DotaViewModel
 import com.abschlussProjekt.dotastats.util.getFormattedValue
 import com.abschlussProjekt.dotastats.util.res_url
 
 
-class MatchDetailAdapter(private val dataset: List<*>, private val context: Context) :
+class MatchDetailAdapter(
+    private val dataset: List<*>, private val context: Context, private val viewModel: DotaViewModel
+) :
     RecyclerView.Adapter<MatchDetailAdapter.ItemViewHolder>() {
 
     inner class ItemViewHolder(val binding: DetailMatchListItemBinding) :
@@ -49,12 +55,27 @@ class MatchDetailAdapter(private val dataset: List<*>, private val context: Cont
         with(holder.binding) {
             when (player) {
                 is Player -> {
-                    heroIV.setOnClickListener { showDialog(player) }
+
+                    val onClickListener = OnClickListener {
+                        Log.e("PlayerID", player.account_id.toString())
+                        viewModel.getPlayerProfileByID(player.account_id)
+                        viewModel.getPlayerWinLoseByID(player.account_id)
+                        viewModel.getPlayerRecentMatchesByID(player.account_id)
+                        it.findNavController().navigate(
+                            MatchDetailFragmentDirections.actionMatchDetailFragmentToPlayerFragment()
+                        )
+                    }
+                    heroIV.setOnClickListener(onClickListener)
+                    playerNameTV.setOnClickListener(onClickListener)
 
                     playerNameTV.text = when {
                         player.name?.isNotBlank() == true -> player.name
                         player.personaname?.isNotBlank() == true -> player.personaname
-                        else -> "Anonymous"
+                        else -> {
+                            playerNameTV.setOnClickListener(null)
+                            heroIV.setOnClickListener(null)
+                            "Anonymous"
+                        }
                     }
 
                     heroIV.load(res_url + player.hero.img)
@@ -115,7 +136,6 @@ class MatchDetailAdapter(private val dataset: List<*>, private val context: Cont
                         inventoryTV,
                         backpackTV
                     )
-
                     val nameList = context.resources.getStringArray(R.array.match_detail_title)
                     val toolTipTextList =
                         context.resources.getStringArray(R.array.match_detail_tooltip)

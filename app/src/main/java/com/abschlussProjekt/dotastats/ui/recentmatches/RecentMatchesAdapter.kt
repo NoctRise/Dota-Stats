@@ -3,6 +3,7 @@ package com.abschlussProjekt.dotastats.ui.recentmatches
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.abschlussProjekt.dotastats.data.datamodels.ProMatch
 import com.abschlussProjekt.dotastats.databinding.MatchListItemBinding
@@ -16,9 +17,7 @@ class RecentMatchesAdapter(
     RecyclerView.Adapter<RecentMatchesAdapter.ItemViewHolder>() {
 
     inner class ItemViewHolder(val binding: MatchListItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-    }
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
@@ -55,6 +54,9 @@ class RecentMatchesAdapter(
                 viewModel.getMatchById(match.match_id)
 
                 // Listener entfernen, um Navigation Exception zu verhindern
+                it.findNavController()
+                    .navigate(RecentMatchesFragmentDirections.actionRecentMatchesFragmentToMatchDetailFragment())
+
                 it.setOnClickListener(null)
             }
         }

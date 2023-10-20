@@ -18,10 +18,19 @@
         android:id="@+id/matchDetailFragment"
         android:name="com.abschlussProjekt.dotastats.ui.matchdetail.MatchDetailFragment"
         android:label="fragment_match_detail"
-        tools:layout="@layout/fragment_match_detail" />
+        tools:layout="@layout/fragment_match_detail" >
+        <action
+            android:id="@+id/action_matchDetailFragment_to_playerFragment"
+            app:destination="@id/playerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/teamRankingFragment"
         android:name="com.abschlussProjekt.dotastats.ui.teamranking.TeamRankingFragment"
         android:label="fragment_team_ranking"
         tools:layout="@layout/fragment_team_ranking" />
+    <fragment
+        android:id="@+id/playerFragment"
+        android:name="com.abschlussProjekt.dotastats.ui.player.PlayerFragment"
+        android:label="fragment_player"
+        tools:layout="@layout/fragment_player" />
 </navigation>
