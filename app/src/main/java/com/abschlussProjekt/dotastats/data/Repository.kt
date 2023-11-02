@@ -44,7 +44,12 @@ class Repository(
         get() = _playerRecentMatches
 
     suspend fun getTeams() {
-        _proTeams.postValue(apiService.getTeams())
+        try {
+            _proTeams.postValue(apiService.getTeams())
+        }
+        catch (ex: Exception) {
+            Log.e("$TAG-getTeams", "Error loading data from api: $ex")
+        }
     }
 
 

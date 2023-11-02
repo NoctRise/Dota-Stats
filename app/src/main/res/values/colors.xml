@@ -3,7 +3,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="textColor">#99FFFFFF</color>
+
     <color name="blue">#1D3049</color>
     <color name="primary">#1C253B</color>
     <color name="light_blue">#29AFF8</color>
+    <color name="gold">#C4B040</color>
+    <color name="red">#ed5e5e</color>
+    <color name="green">#76ad79</color>
+    <color name="textBlue">#7c99a8</color>
 </resources>

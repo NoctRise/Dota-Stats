@@ -47,12 +47,14 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:orientation="horizontal"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameTV">
 
         <TextView
             android:id="@+id/winTV"
+            style="@style/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Wins" />
@@ -62,10 +64,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textColor="@color/green" />
 
         <TextView
             android:id="@+id/lossTV"
+            style="@style/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -76,10 +80,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textColor="@color/red" />
 
         <TextView
             android:id="@+id/winrateTV"
+            style="@style/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -90,7 +96,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textColor="@color/textBlue" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

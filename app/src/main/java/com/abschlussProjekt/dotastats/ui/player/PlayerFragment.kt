@@ -39,6 +39,7 @@ class PlayerFragment : Fragment() {
         {
             with(binding)
             {
+                statsLayout.visibility = View.VISIBLE
                 winValueTV.text = it["win"].toString()
                 lossValueTV.text = it["lose"].toString()
                 winrateValueTV.text = calcWinRate(it)
