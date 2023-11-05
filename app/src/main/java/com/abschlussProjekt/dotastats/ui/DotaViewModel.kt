@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 
 class DotaViewModel(application: Application) : AndroidViewModel(application) {
 
+
     private val database = getInstance(application)
     private val repository = Repository(OpenDotaApi.retrofitService, database)
 

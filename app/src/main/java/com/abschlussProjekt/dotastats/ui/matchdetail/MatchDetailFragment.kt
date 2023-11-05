@@ -87,14 +87,15 @@ class MatchDetailFragment : Fragment() {
         dataSet.setDrawValues(false)
         dataSet.setDrawCircles(false)
 
+
         dataSet.color = requireContext().getColor(R.color.gold)
-        dataSet.highLightColor = requireContext().getColor(R.color.light_blue)
-        dataSet.color
+        dataSet.highLightColor = requireContext().getColor(R.color.white)
 
 
         binding.chart.data =  LineData(dataSet)
-        // refresh Graph
-        binding.chart.invalidate()
+        binding.chart.data
+
+
 
 
     }
