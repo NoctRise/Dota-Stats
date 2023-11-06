@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import coil.load
 import coil.transform.RoundedCornersTransformation
+import com.abschlussProjekt.dotastats.MainActivity
 import com.abschlussProjekt.dotastats.databinding.FragmentPlayerBinding
 import com.abschlussProjekt.dotastats.ui.DotaViewModel
 
@@ -27,6 +28,9 @@ class PlayerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        (requireContext() as MainActivity).showLoadingScreen(true)
+
         // Inflate the layout for this fragment
         viewModel.playerProfile.observe(viewLifecycleOwner) {
             binding.profileIV.load(it.avatarfull) {
@@ -37,18 +41,21 @@ class PlayerFragment : Fragment() {
 
         viewModel.playerWinLose.observe(viewLifecycleOwner)
         {
-            with(binding)
-            {
-                statsLayout.visibility = View.VISIBLE
-                winValueTV.text = it["win"].toString()
-                lossValueTV.text = it["lose"].toString()
-                winrateValueTV.text = calcWinRate(it)
+            it?.let {
+                with(binding)
+                {
+                    statsLayout.visibility = View.VISIBLE
+                    winValueTV.text = it["win"].toString()
+                    lossValueTV.text = it["lose"].toString()
+                    winrateValueTV.text = calcWinRate(it)
+                    (requireContext() as MainActivity).showLoadingScreen(false)
+                }
             }
         }
 
         viewModel.playerRecentMatches.observe(viewLifecycleOwner) {
-            binding.playerProfileRV.adapter = PlayerAdapter(it)
-            Log.e("PlayerMatches", it.toString())
+                binding.playerProfileRV.adapter = PlayerAdapter(it)
+                Log.e("PlayerMatches", it.toString())
         }
         return binding.root
     }

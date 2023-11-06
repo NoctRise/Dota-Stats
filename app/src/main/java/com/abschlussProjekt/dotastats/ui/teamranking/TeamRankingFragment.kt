@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.abschlussProjekt.dotastats.MainActivity
 import com.abschlussProjekt.dotastats.databinding.FragmentTeamRankingBinding
 import com.abschlussProjekt.dotastats.ui.DotaViewModel
 import java.util.Calendar
@@ -28,8 +29,10 @@ class TeamRankingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
+        (requireContext() as MainActivity).showLoadingScreen(true)
         viewModel.getTeams()
         viewModel.proTeams.observe(viewLifecycleOwner) {
+            (requireContext() as MainActivity).showLoadingScreen(false)
             binding.teamRankingRV.adapter =
                 TeamRankingAdapter(it.filter { team -> isActive(team.last_match_time) }.take(100))
         }
