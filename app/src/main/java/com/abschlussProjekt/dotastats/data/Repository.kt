@@ -23,16 +23,16 @@ class Repository(
     val recentProMatches: LiveData<List<ProMatch>>
         get() = _recentProMatches
 
-    private val _detailProMatch = MutableLiveData<ProMatchDetail>()
-    val detailProMatch: LiveData<ProMatchDetail>
+    private val _detailProMatch = MutableLiveData<ProMatchDetail?>()
+    val detailProMatch: LiveData<ProMatchDetail?>
         get() = _detailProMatch
 
     private val _playerProfile = MutableLiveData<PlayerProfile>()
     val playerProfile: LiveData<PlayerProfile>
         get() = _playerProfile
 
-    private val _playerWinLose = MutableLiveData<Map<String, Int>>()
-    val playerWinLose: LiveData<Map<String, Int>>
+    private val _playerWinLose = MutableLiveData<Map<String, Int>?>()
+    val playerWinLose: LiveData<Map<String, Int>?>
         get() = _playerWinLose
 
     private val _proTeams = MutableLiveData<List<ProTeam>>()
@@ -46,8 +46,7 @@ class Repository(
     suspend fun getTeams() {
         try {
             _proTeams.postValue(apiService.getTeams())
-        }
-        catch (ex: Exception) {
+        } catch (ex: Exception) {
             Log.e("$TAG-getTeams", "Error loading data from api: $ex")
         }
     }
@@ -65,6 +64,7 @@ class Repository(
     // Hole MatchDetails per ID
     suspend fun getMatchById(id: Long) {
         try {
+            _detailProMatch.postValue(null)
             val matchDetailAPI = apiService.getMatchById(id)
 
             // Iteriere durch die Playerliste und füge die Heroes und die Abilities hinzu
@@ -137,6 +137,7 @@ class Repository(
 
     suspend fun getPlayerWinLoseByID(accountID: Long) {
         try {
+            _playerWinLose.postValue(null)
             _playerWinLose.postValue(apiService.getPlayerWinLoseByID(accountID))
         } catch (ex: Exception) {
             Log.e("$TAG-getPlayerRecentMatchesByID", "Error loading data from api: $ex")

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.abschlussProjekt.dotastats.MainActivity
 import com.abschlussProjekt.dotastats.R
 import com.abschlussProjekt.dotastats.databinding.FragmentMatchDetailBinding
 import com.abschlussProjekt.dotastats.ui.DotaViewModel
@@ -30,24 +31,35 @@ class MatchDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // Rufe Ladescreen auf
+        (requireContext() as MainActivity).showLoadingScreen(true)
+
         binding.radiantTeamRV.setHasFixedSize(true)
         binding.direTeamRV.setHasFixedSize(true)
 
         viewModel.detailProMatch.observe(viewLifecycleOwner) {
-            binding.detailRadiantTV.text = it.radiant_team?.name ?: "Radiant"
-            binding.direDetailTV.text = it.dire_team?.name ?: "Dire"
-            binding.radiantTeamRV.adapter =
-                MatchDetailAdapter(listOf(null) + it.players.take(5), requireContext(), viewModel)
-            binding.direTeamRV.adapter =
-                MatchDetailAdapter(
-                    listOf(null) + it.players.takeLast(5),
-                    requireContext(),
-                    viewModel
-                )
-            // Wenn Daten vorhanden sind, zeige Chart an
-            it.radiant_gold_adv?.let { goldAdvantageList ->
-                initChart()
-                showChart(goldAdvantageList)
+            it?.let {
+                binding.detailRadiantTV.text = it.radiant_team?.name ?: "Radiant"
+                binding.direDetailTV.text = it.dire_team?.name ?: "Dire"
+                binding.radiantTeamRV.adapter =
+                    MatchDetailAdapter(
+                        listOf(null) + it.players.take(5),
+                        requireContext(),
+                        viewModel
+                    )
+                binding.direTeamRV.adapter =
+                    MatchDetailAdapter(
+                        listOf(null) + it.players.takeLast(5),
+                        requireContext(),
+                        viewModel
+                    )
+                // Wenn Daten vorhanden sind, zeige Chart an
+                it.radiant_gold_adv?.let { goldAdvantageList ->
+                    initChart()
+                    showChart(goldAdvantageList)
+                }
+
+                (requireContext() as MainActivity).showLoadingScreen(false)
             }
         }
 
@@ -92,11 +104,7 @@ class MatchDetailFragment : Fragment() {
         dataSet.highLightColor = requireContext().getColor(R.color.white)
 
 
-        binding.chart.data =  LineData(dataSet)
+        binding.chart.data = LineData(dataSet)
         binding.chart.data
-
-
-
-
     }
 }

@@ -2,7 +2,9 @@ package com.abschlussProjekt.dotastats
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.abschlussProjekt.dotastats.databinding.ActivityMainBinding
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+
         val navController =
             (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController
         binding.bottomNavBar.setupWithNavController(navController)
@@ -27,9 +30,9 @@ class MainActivity : AppCompatActivity() {
 
             Log.e(
                 "Stack",
-                navController.currentBackStack.value.joinToString {"${it.destination.displayName}\n" })
+                navController.currentBackStack.value.joinToString { "${it.destination.displayName}\n" })
 
-            if (navController.currentDestination!!.id != menuItem.itemId){
+            if (navController.currentDestination!!.id != menuItem.itemId) {
                 navController.navigate(menuItem.itemId)
             }
 
@@ -38,6 +41,22 @@ class MainActivity : AppCompatActivity() {
 //                    navController.popBackStack(menuItem.itemId, false)
 //                } ?: navController.navigate(menuItem.itemId)
             true
+        }
+    }
+
+
+    fun showLoadingScreen(show: Boolean) {
+        when (show) {
+            true -> {
+                binding.loadingGifLayout.visibility = View.VISIBLE
+                binding.bottomNavBar.menu[0].isEnabled = false
+                binding.bottomNavBar.menu[1].isEnabled = false
+            }
+            else -> {
+                binding.loadingGifLayout.visibility = View.INVISIBLE
+                binding.bottomNavBar.menu[0].isEnabled = true
+                binding.bottomNavBar.menu[1].isEnabled = true
+            }
         }
     }
 }

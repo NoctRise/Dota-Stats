@@ -63,6 +63,7 @@ dependencies {
     // Coil
     implementation 'io.coil-kt:coil:2.4.0'
 
+
     // Room Dependencies
     implementation 'androidx.room:room-runtime:2.5.2'
     ksp 'androidx.room:room-compiler:2.5.2'
@@ -70,4 +71,7 @@ dependencies {
 
     // MPAndroidChart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // Gif View
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.18'
 }
