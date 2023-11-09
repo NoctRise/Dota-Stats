@@ -4,5 +4,6 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
         <item name ="colorPrimary">@color/primary</item>
+        <item name="colorSecondaryContainer">@color/primary</item>
     </style>
 </resources>

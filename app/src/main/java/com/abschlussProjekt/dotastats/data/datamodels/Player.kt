@@ -30,8 +30,6 @@ data class Player(
 
     val last_hits: Int,
     val net_worth: Int,
-//    val permanent_buffs: List<PermanentBuff>,
 
-    val purchase_log: List<ItemPurchase>?,
     val tower_damage: Int
 )

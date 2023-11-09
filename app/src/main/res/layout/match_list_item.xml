@@ -9,11 +9,13 @@
 
     <TextView
         android:id="@+id/radiantNameTV"
+        style="@style/text"
         android:layout_width="90dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:text="TextView"
-        style="@style/text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/radiantWinIV"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,11 +33,11 @@
 
     <TextView
         android:id="@+id/vsTV"
+        style="@style/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="vs"
-        style="@style/text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/radiantNameTV"
         app:layout_constraintTop_toTopOf="parent" />
@@ -53,22 +55,24 @@
 
     <TextView
         android:id="@+id/direNameTV"
+        style="@style/text"
         android:layout_width="90dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:text="TextView"
-        style="@style/text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/direWinIV"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/durationTV"
+        style="@style/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="TextView"
-        style="@style/text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

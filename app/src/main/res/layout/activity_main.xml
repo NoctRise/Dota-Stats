@@ -25,7 +25,7 @@
         android:id="@+id/bottomNavBarDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/white"
+        android:background="@color/textColor"
         app:layout_constraintBottom_toBottomOf="@+id/fragmentContainerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -42,11 +42,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/loadingGifLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/primary"
+        android:gravity="center"
+        android:orientation="vertical"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavBarDivider"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,11 +59,7 @@
             android:id="@+id/gifView"
             android:layout_width="300dp"
             android:layout_height="300dp"
-            android:background="@drawable/loading_gif"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="@drawable/loading_gif" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -70,12 +68,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:indeterminate="true"
-            android:indeterminateTint="@color/light_blue"
-            app:layout_constraintEnd_toEndOf="@id/gifView"
-            app:layout_constraintStart_toStartOf="@id/gifView"
-            app:layout_constraintTop_toBottomOf="@id/gifView" />
+            android:indeterminateTint="@color/light_blue" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

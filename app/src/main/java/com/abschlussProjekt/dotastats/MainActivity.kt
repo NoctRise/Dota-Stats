@@ -1,7 +1,6 @@
 package com.abschlussProjekt.dotastats
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
@@ -27,10 +26,6 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavBar.setupWithNavController(navController)
 
         binding.bottomNavBar.setOnItemSelectedListener { menuItem ->
-
-            Log.e(
-                "Stack",
-                navController.currentBackStack.value.joinToString { "${it.destination.displayName}\n" })
 
             if (navController.currentDestination!!.id != menuItem.itemId) {
                 navController.navigate(menuItem.itemId)

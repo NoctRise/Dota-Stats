@@ -31,6 +31,8 @@ class MatchDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+
         // Rufe Ladescreen auf
         (requireContext() as MainActivity).showLoadingScreen(true)
 
@@ -56,7 +58,13 @@ class MatchDetailFragment : Fragment() {
                 // Wenn Daten vorhanden sind, zeige Chart an
                 it.radiant_gold_adv?.let { goldAdvantageList ->
                     initChart()
-                    showChart(goldAdvantageList)
+                    val color = requireContext().getColor(R.color.gold)
+                    showChart(goldAdvantageList, color, "Gold Advantage")
+                }
+
+                it.radiant_xp_adv?.let { expAdvantageList ->
+                    val color = requireContext().getColor(R.color.textBlue)
+                    showChart(expAdvantageList, color, "Exp Advantage")
                 }
 
                 (requireContext() as MainActivity).showLoadingScreen(false)
@@ -85,7 +93,7 @@ class MatchDetailFragment : Fragment() {
         }
     }
 
-    private fun showChart(dataList: List<Int>) {
+    private fun showChart(dataList: List<Int>, color: Int, label: String) {
 
         val entryList = mutableListOf<Entry>()
 
@@ -93,18 +101,20 @@ class MatchDetailFragment : Fragment() {
             entryList.add(Entry(index.toFloat(), i.toFloat()))
         }
 
-        val dataSet = LineDataSet(entryList, "Gold Advantage")
+        val dataSet = LineDataSet(entryList, label)
 
         // blende Werte und Punkte im Graphen aus
         dataSet.setDrawValues(false)
         dataSet.setDrawCircles(false)
 
+        dataSet.color = color
+        dataSet.highLightColor = requireContext().getColor(R.color.textBlue)
 
-        dataSet.color = requireContext().getColor(R.color.gold)
-        dataSet.highLightColor = requireContext().getColor(R.color.white)
+
+        binding.chart.data?.let {
+            binding.chart.data.addDataSet(dataSet)
+        } ?: run { binding.chart.data = LineData(dataSet) }
 
 
-        binding.chart.data = LineData(dataSet)
-        binding.chart.data
     }
 }

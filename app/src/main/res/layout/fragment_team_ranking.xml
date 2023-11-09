@@ -6,6 +6,73 @@
     android:layout_height="match_parent"
     tools:context=".ui.teamranking.TeamRankingFragment" >
 
+    <TextView
+        android:id="@+id/teamRankTV"
+        style="@style/textHeadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Rank"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/logoIVPlaceholder"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:maxWidth="60dp"
+        android:minWidth="60dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/teamRankTV"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/teamNameTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:maxWidth="236dp"
+        android:minWidth="236dp"
+        android:text="Teamname"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/logoIVPlaceholder"
+        app:layout_constraintEnd_toStartOf="@+id/teamRatingTV"
+        app:layout_constraintStart_toEndOf="@+id/logoIVPlaceholder"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/teamRatingTV"
+        style="@style/textHeadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Rating"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/teamNameTV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/teamNameTV" />
+
+
+    <View
+        android:id="@+id/viewDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/textColor"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teamRankTV" />
+
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/teamRankingRV"
         android:layout_width="match_parent"
@@ -14,5 +81,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/viewDivider" />
 </androidx.constraintlayout.widget.ConstraintLayout>

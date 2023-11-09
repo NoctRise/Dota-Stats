@@ -10,6 +10,7 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -74,6 +75,7 @@ class MatchDetailAdapter(
                         else -> {
                             playerNameTV.setOnClickListener(null)
                             heroIV.setOnClickListener(null)
+                            playerNameTV.setTextColor(ContextCompat.getColor(context,R.color.textColor))
                             "Anonymous"
                         }
                     }

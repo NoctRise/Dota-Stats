@@ -40,9 +40,7 @@ data class PlayerAPI(
 
     val last_hits: Int,
     val net_worth: Int,
-//    val permanent_buffs: List<PermanentBuff>,
 
-    val purchase_log: List<ItemPurchase>?,
     val tower_damage: Int
 ) {
     fun toPLayer(
@@ -74,7 +72,6 @@ data class PlayerAPI(
         backpack,
         last_hits,
         net_worth,
-        purchase_log,
         tower_damage
     )
 
