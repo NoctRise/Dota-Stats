@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.abschlussProjekt.dotastats.databinding.ActivityMainBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,17 +43,23 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun showLoadingScreen(show: Boolean) {
-        when (show) {
-            true -> {
-                binding.loadingGifLayout.visibility = View.VISIBLE
-                binding.bottomNavBar.menu[0].isEnabled = false
-                binding.bottomNavBar.menu[1].isEnabled = false
-            }
-            else -> {
-                binding.loadingGifLayout.visibility = View.INVISIBLE
-                binding.bottomNavBar.menu[0].isEnabled = true
-                binding.bottomNavBar.menu[1].isEnabled = true
+    fun showLoadingScreen(show: Boolean, delay: Long = 0L) {
+
+        lifecycleScope.launch {
+            delay(delay)
+
+            when (show) {
+                true -> {
+                    binding.loadingGifLayout.visibility = View.VISIBLE
+                    binding.bottomNavBar.menu[0].isEnabled = false
+                    binding.bottomNavBar.menu[1].isEnabled = false
+                }
+
+                else -> {
+                    binding.loadingGifLayout.visibility = View.INVISIBLE
+                    binding.bottomNavBar.menu[0].isEnabled = true
+                    binding.bottomNavBar.menu[1].isEnabled = true
+                }
             }
         }
     }

@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_matchDetailFragment_to_playerFragment"
             app:destination="@id/playerFragment" />
+        <argument
+            android:name="id"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/teamRankingFragment"
@@ -32,5 +35,9 @@
         android:id="@+id/playerFragment"
         android:name="com.abschlussProjekt.dotastats.ui.player.PlayerFragment"
         android:label="fragment_player"
-        tools:layout="@layout/fragment_player" />
+        tools:layout="@layout/fragment_player" >
+        <argument
+            android:name="accId"
+            app:argType="long" />
+    </fragment>
 </navigation>

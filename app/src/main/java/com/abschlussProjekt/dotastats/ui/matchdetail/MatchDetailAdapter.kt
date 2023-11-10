@@ -1,10 +1,8 @@
 package com.abschlussProjekt.dotastats.ui.matchdetail
 
 
-import android.app.AlertDialog.Builder
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
@@ -19,13 +17,12 @@ import coil.transform.RoundedCornersTransformation
 import com.abschlussProjekt.dotastats.R
 import com.abschlussProjekt.dotastats.data.datamodels.Player
 import com.abschlussProjekt.dotastats.databinding.DetailMatchListItemBinding
-import com.abschlussProjekt.dotastats.ui.DotaViewModel
 import com.abschlussProjekt.dotastats.util.getFormattedValue
 import com.abschlussProjekt.dotastats.util.res_url
 
 
 class MatchDetailAdapter(
-    private val dataset: List<*>, private val context: Context, private val viewModel: DotaViewModel
+    private val dataset: List<*>, private val context: Context
 ) :
     RecyclerView.Adapter<MatchDetailAdapter.ItemViewHolder>() {
 
@@ -58,12 +55,8 @@ class MatchDetailAdapter(
                 is Player -> {
 
                     val onClickListener = OnClickListener {
-                        Log.e("PlayerID", player.account_id.toString())
-                        viewModel.getPlayerProfileByID(player.account_id)
-                        viewModel.getPlayerWinLoseByID(player.account_id)
-                        viewModel.getPlayerRecentMatchesByID(player.account_id)
                         it.findNavController().navigate(
-                            MatchDetailFragmentDirections.actionMatchDetailFragmentToPlayerFragment()
+                            MatchDetailFragmentDirections.actionMatchDetailFragmentToPlayerFragment(player.account_id)
                         )
                     }
                     heroIV.setOnClickListener(onClickListener)
@@ -75,7 +68,12 @@ class MatchDetailAdapter(
                         else -> {
                             playerNameTV.setOnClickListener(null)
                             heroIV.setOnClickListener(null)
-                            playerNameTV.setTextColor(ContextCompat.getColor(context,R.color.textColor))
+                            playerNameTV.setTextColor(
+                                ContextCompat.getColor(
+                                    context,
+                                    R.color.textColor
+                                )
+                            )
                             "Anonymous"
                         }
                     }
@@ -152,18 +150,6 @@ class MatchDetailAdapter(
                     backpackTV.visibility = View.VISIBLE
                 }
             }
-
         }
-    }
-
-
-    // TODO Dialog für Items
-    private fun showDialog(player: Player) {
-        val builder = Builder(context)
-        val newBind = DetailMatchListItemBinding.inflate(LayoutInflater.from(context))
-        newBind.playerNameTV.text = player.hero.name
-
-        builder.setView(newBind.root)
-        builder.create().show()
     }
 }

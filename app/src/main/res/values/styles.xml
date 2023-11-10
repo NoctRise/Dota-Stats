@@ -15,4 +15,9 @@
     <style name="text">
         <item name="android:textColor">@color/textColor</item>
     </style>
+
+    <style name="myChip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/bg_chip_state_list</item>
+        <item name="android:textColor">@color/text_chip_state_list</item>
+    </style>
 </resources>

@@ -31,6 +31,13 @@ class PlayerFragment : Fragment() {
 
         (requireContext() as MainActivity).showLoadingScreen(true)
 
+        val accountID = requireArguments().getLong("accId")
+
+        viewModel.getPlayerProfileByID(accountID)
+        viewModel.getPlayerWinLoseByID(accountID)
+        viewModel.getPlayerRecentMatchesByID(accountID)
+
+
         // Inflate the layout for this fragment
         viewModel.playerProfile.observe(viewLifecycleOwner) {
             binding.profileIV.load(it.avatarfull) {
@@ -48,7 +55,8 @@ class PlayerFragment : Fragment() {
                     winValueTV.text = it["win"].toString()
                     lossValueTV.text = it["lose"].toString()
                     winrateValueTV.text = calcWinRate(it)
-                    (requireContext() as MainActivity).showLoadingScreen(false)
+
+                    (requireContext() as MainActivity).showLoadingScreen(false,750L)
                 }
             }
         }

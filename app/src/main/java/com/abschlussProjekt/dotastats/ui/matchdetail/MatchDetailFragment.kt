@@ -4,11 +4,13 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.abschlussProjekt.dotastats.MainActivity
 import com.abschlussProjekt.dotastats.R
+import com.abschlussProjekt.dotastats.data.datamodels.ProMatchDetail
 import com.abschlussProjekt.dotastats.databinding.FragmentMatchDetailBinding
 import com.abschlussProjekt.dotastats.ui.DotaViewModel
 import com.github.mikephil.charting.components.XAxis
@@ -25,6 +27,8 @@ class MatchDetailFragment : Fragment() {
         )
     }
 
+    private lateinit var playerColors: IntArray
+
     private val viewModel: DotaViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -36,42 +40,86 @@ class MatchDetailFragment : Fragment() {
         // Rufe Ladescreen auf
         (requireContext() as MainActivity).showLoadingScreen(true)
 
-        binding.radiantTeamRV.setHasFixedSize(true)
-        binding.direTeamRV.setHasFixedSize(true)
+        val matchId = requireArguments().getLong("id")
+        viewModel.getMatchById(matchId)
 
-        viewModel.detailProMatch.observe(viewLifecycleOwner) {
-            it?.let {
-                binding.detailRadiantTV.text = it.radiant_team?.name ?: "Radiant"
-                binding.direDetailTV.text = it.dire_team?.name ?: "Dire"
-                binding.radiantTeamRV.adapter =
-                    MatchDetailAdapter(
-                        listOf(null) + it.players.take(5),
-                        requireContext(),
-                        viewModel
-                    )
-                binding.direTeamRV.adapter =
-                    MatchDetailAdapter(
-                        listOf(null) + it.players.takeLast(5),
-                        requireContext(),
-                        viewModel
-                    )
-                // Wenn Daten vorhanden sind, zeige Chart an
-                it.radiant_gold_adv?.let { goldAdvantageList ->
-                    initChart()
-                    val color = requireContext().getColor(R.color.gold)
-                    showChart(goldAdvantageList, color, "Gold Advantage")
+
+        playerColors = requireContext().resources.getIntArray(R.array.playerColors)
+
+        with(binding) {
+
+            radiantTeamRV.setHasFixedSize(true)
+            direTeamRV.setHasFixedSize(true)
+
+            viewModel.detailProMatch.observe(viewLifecycleOwner) {
+                it?.let { proMatchDetail ->
+
+                    detailRadiantTV.text = proMatchDetail.radiant_team?.name ?: "Radiant"
+                    direDetailTV.text = proMatchDetail.dire_team?.name ?: "Dire"
+                    radiantTeamRV.adapter =
+                        MatchDetailAdapter(
+                            listOf(null) + proMatchDetail.players.take(5),
+                            requireContext()
+                        )
+                    direTeamRV.adapter =
+                        MatchDetailAdapter(
+                            listOf(null) + proMatchDetail.players.takeLast(5),
+                            requireContext()
+                        )
+                    // Wenn Daten vorhanden sind, zeige Chart an
+                    proMatchDetail.radiant_gold_adv?.let { goldAdvantageList ->
+                        initChart()
+
+                        val goldColor = requireContext().getColor(R.color.gold)
+                        val expColor = requireContext().getColor(R.color.textBlue)
+
+                        advantageChip.setOnClickListener {
+                            // reset Chart
+                            chart.data = null
+
+                            // Zeige Goldvorteil im Graph an
+                            addToChart(goldAdvantageList, goldColor, "Gold Advantage")
+
+                            proMatchDetail.radiant_xp_adv?.let { expAdvantageList ->
+                                // Zeige Expvorteil im Graph an
+                                addToChart(expAdvantageList, expColor, "Exp Advantage")
+                            }
+                            chart.legend.isEnabled = true
+                            chart.animateXY(3000, 3000)
+                        }
+
+                        advantageChip.performClick()
+                    }
+
+                    if (proMatchDetail.players.filter { it.gold_t != null }.size == 10) {
+                        graphChipGroup.visibility = View.VISIBLE
+                        goldChip.visibility = View.VISIBLE
+                        goldChip.setOnClickListener(
+                            getChipListener(
+                                proMatchDetail,
+                                true
+                            )
+                        )
+                    }
+
+                    if (proMatchDetail.players.filter { it.xp_t != null }.size == 10) {
+                        graphChipGroup.visibility = View.VISIBLE
+                        expChip.visibility = View.VISIBLE
+
+                        expChip.setOnClickListener(
+                            getChipListener(
+                                proMatchDetail,
+                                false
+                            )
+                        )
+                    }
+                    // Blende Loading aus
+                    (requireContext() as MainActivity).showLoadingScreen(false, 750L)
                 }
-
-                it.radiant_xp_adv?.let { expAdvantageList ->
-                    val color = requireContext().getColor(R.color.textBlue)
-                    showChart(expAdvantageList, color, "Exp Advantage")
-                }
-
-                (requireContext() as MainActivity).showLoadingScreen(false)
             }
+            return root
         }
 
-        return binding.root
     }
 
 
@@ -93,11 +141,11 @@ class MatchDetailFragment : Fragment() {
         }
     }
 
-    private fun showChart(dataList: List<Int>, color: Int, label: String) {
+    private fun addToChart(yDataList: List<Int>, color: Int, label: String) {
 
         val entryList = mutableListOf<Entry>()
 
-        dataList.forEachIndexed { index, i ->
+        yDataList.forEachIndexed { index, i ->
             entryList.add(Entry(index.toFloat(), i.toFloat()))
         }
 
@@ -110,11 +158,38 @@ class MatchDetailFragment : Fragment() {
         dataSet.color = color
         dataSet.highLightColor = requireContext().getColor(R.color.textBlue)
 
-
         binding.chart.data?.let {
             binding.chart.data.addDataSet(dataSet)
         } ?: run { binding.chart.data = LineData(dataSet) }
 
-
+        // Update y min/max für Darstellung
+        binding.chart.axisLeft.axisMinimum = binding.chart.data.yMin
+        binding.chart.axisLeft.axisMaximum = binding.chart.data.yMax
     }
+
+    private fun getChipListener(
+        proMatchDetail: ProMatchDetail,
+        isGold: Boolean
+    ): OnClickListener =
+        OnClickListener {
+            // reset Chart
+            binding.chart.data = null
+
+
+            // Iteriere Playerlist und füge die Daten dem Graphen hinzu
+            proMatchDetail.players.forEachIndexed { index, player ->
+                val dataList = if (isGold) proMatchDetail.players[index].gold_t!!
+                else proMatchDetail.players[index].xp_t!!
+
+                addToChart(
+                    dataList,
+                    playerColors[index],
+                    player.account_id.toString()
+                )
+            }
+            binding.chart.legend.isEnabled = false
+
+            binding.chart.animateXY(3000, 3000)
+        }
+
 }

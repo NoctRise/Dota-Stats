@@ -72,12 +72,54 @@
                 </androidx.recyclerview.widget.RecyclerView>
             </HorizontalScrollView>
 
+            <LinearLayout
+                android:id="@+id/graphChipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:checkedChip="@+id/advantageChip"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/advantageChip"
+                        style="@style/myChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Advantage" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/goldChip"
+                        style="@style/myChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gold"
+                        android:visibility="gone" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/expChip"
+                        style="@style/myChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Exp"
+                        android:visibility="gone" />
+                </com.google.android.material.chip.ChipGroup>
+            </LinearLayout>
+
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/chart"
-                android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:visibility="gone" />
+                android:layout_margin="8dp"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
         </LinearLayout>
     </ScrollView>

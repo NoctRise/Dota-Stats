@@ -174,7 +174,7 @@ class Repository(
 
             // Hole alle IDS von den Abilities
             val abilityIDS = apiService.getAbilityIDS()
-            // Tausche Key -> Value und Value -> Key, um besser suchen zu können
+            // Tausche Key -> Value mit Value -> Key, um besser suchen zu können
             val iDMap = abilityIDS.map { (k, v) ->
                 v to k
             }.toMap()

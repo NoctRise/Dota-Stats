@@ -41,7 +41,10 @@ data class PlayerAPI(
     val last_hits: Int,
     val net_worth: Int,
 
-    val tower_damage: Int
+    val tower_damage: Int,
+    val gold_t: List<Int>?,
+    val xp_t: List<Int>?
+
 ) {
     fun toPLayer(
         abilityList: List<Ability>,
@@ -72,7 +75,9 @@ data class PlayerAPI(
         backpack,
         last_hits,
         net_worth,
-        tower_damage
+        tower_damage,
+        gold_t,
+        xp_t
     )
 
 }

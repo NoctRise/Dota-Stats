@@ -33,7 +33,7 @@ class RecentMatchesFragment : Fragment() {
         viewModel.recentProMatches.observe(viewLifecycleOwner) {
             (requireContext() as MainActivity).showLoadingScreen(false)
             binding.matchRecyclerView.adapter = RecentMatchesAdapter(
-                it, viewModel
+                it
             )
         }
 

@@ -12,4 +12,19 @@
     <color name="red">#ed5e5e</color>
     <color name="green">#76ad79</color>
     <color name="textBlue">#7c99a8</color>
+
+
+    <!-- > Player Colors-->
+    <array name="playerColors">
+        <item name="player1">#3375FF</item>
+        <item name="player2">#66FFBF</item>
+        <item name="player3">#BF00BF</item>
+        <item name="player4">#F3F00B</item>
+        <item name="player5">#FF6B00</item>
+        <item name="player6">#FE86C2</item>
+        <item name="player7">#A1B447</item>
+        <item name="player8">#65D9F7</item>
+        <item name="player9">#008321</item>
+        <item name="player10">#A46900</item>
+    </array>
 </resources>
