@@ -36,8 +36,8 @@ class RecentMatchesAdapter(
         val match = dataset[position]
 
         with(holder.binding) {
-            radiantNameTV.text = match.radiant_name
-            direNameTV.text = match.dire_name
+            radiantNameTV.text = match.radiant_name ?: "Unknown"
+            direNameTV.text = match.dire_name ?: "Unknown"
 
             durationTV.text = getMatchDuration(match.duration)
             if (match.radiant_win) {
@@ -53,7 +53,11 @@ class RecentMatchesAdapter(
 
                 // Listener entfernen, um Navigation Exception zu verhindern
                 it.findNavController()
-                    .navigate(RecentMatchesFragmentDirections.actionRecentMatchesFragmentToMatchDetailFragment(match.match_id))
+                    .navigate(
+                        RecentMatchesFragmentDirections.actionRecentMatchesFragmentToMatchDetailFragment(
+                            match.match_id
+                        )
+                    )
 
                 it.setOnClickListener(null)
             }

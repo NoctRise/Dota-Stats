@@ -76,6 +76,7 @@
                 android:id="@+id/graphChipGroup"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:visibility="gone">
@@ -118,8 +119,130 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_margin="8dp"
-                android:visibility="gone"
-                tools:visibility="visible" />
+                android:visibility="gone" />
+
+            <TableLayout
+                android:id="@+id/graphIcons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TableRow
+                    android:id="@+id/radiantIcons"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/radiantIcon1CV"
+                        style="@style/graphIconCardViewStyle">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/radiantIcon1"
+                            style="@style/graphIconImageViewStyle" />
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/radiantIcon2CV"
+                        style="@style/graphIconCardViewStyle">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/radiantIcon2"
+                            style="@style/graphIconImageViewStyle" />
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/radiantIcon3CV"
+                        style="@style/graphIconCardViewStyle">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/radiantIcon3"
+                            style="@style/graphIconImageViewStyle" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/radiantIcon4CV"
+                        style="@style/graphIconCardViewStyle">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/radiantIcon4"
+                            style="@style/graphIconImageViewStyle" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/radiantIcon5CV"
+                        style="@style/graphIconCardViewStyle">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/radiantIcon5"
+                            style="@style/graphIconImageViewStyle" />
+
+                    </androidx.cardview.widget.CardView>
+                </TableRow>
+
+
+                <TableRow
+                    android:id="@+id/direIcons"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/direIcon1CV"
+                        style="@style/graphIconCardViewStyle">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/direIcon1"
+                            style="@style/graphIconImageViewStyle" />
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/direIcon2CV"
+                        style="@style/graphIconCardViewStyle">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/direIcon2"
+                            style="@style/graphIconImageViewStyle" />
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/direIcon3CV"
+                        style="@style/graphIconCardViewStyle">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/direIcon3"
+                            style="@style/graphIconImageViewStyle" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/direIcon4CV"
+                        style="@style/graphIconCardViewStyle">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/direIcon4"
+                            style="@style/graphIconImageViewStyle" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/direIcon5CV"
+                        style="@style/graphIconCardViewStyle">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/direIcon5"
+                            style="@style/graphIconImageViewStyle" />
+                    </androidx.cardview.widget.CardView>
+                </TableRow>
+
+
+            </TableLayout>
 
         </LinearLayout>
     </ScrollView>

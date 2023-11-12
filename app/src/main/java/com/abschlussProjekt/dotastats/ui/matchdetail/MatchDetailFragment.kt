@@ -6,13 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.cardview.widget.CardView
+import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import coil.load
 import com.abschlussProjekt.dotastats.MainActivity
 import com.abschlussProjekt.dotastats.R
 import com.abschlussProjekt.dotastats.data.datamodels.ProMatchDetail
 import com.abschlussProjekt.dotastats.databinding.FragmentMatchDetailBinding
 import com.abschlussProjekt.dotastats.ui.DotaViewModel
+import com.abschlussProjekt.dotastats.util.res_url
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -31,6 +36,8 @@ class MatchDetailFragment : Fragment() {
 
     private val viewModel: DotaViewModel by activityViewModels()
 
+    private lateinit var graphIconList: List<ImageView>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,6 +50,19 @@ class MatchDetailFragment : Fragment() {
         val matchId = requireArguments().getLong("id")
         viewModel.getMatchById(matchId)
 
+        graphIconList = listOf(
+            binding.radiantIcon1,
+            binding.radiantIcon2,
+            binding.radiantIcon3,
+            binding.radiantIcon4,
+            binding.radiantIcon5,
+            binding.direIcon1,
+            binding.direIcon2,
+            binding.direIcon3,
+            binding.direIcon4,
+            binding.direIcon5,
+        )
+
 
         playerColors = requireContext().resources.getIntArray(R.array.playerColors)
 
@@ -54,8 +74,8 @@ class MatchDetailFragment : Fragment() {
             viewModel.detailProMatch.observe(viewLifecycleOwner) {
                 it?.let { proMatchDetail ->
 
-                    detailRadiantTV.text = proMatchDetail.radiant_team?.name ?: "Radiant"
-                    direDetailTV.text = proMatchDetail.dire_team?.name ?: "Dire"
+                    detailRadiantTV.text = proMatchDetail.radiant_team?.name ?: "Unknown"
+                    direDetailTV.text = proMatchDetail.dire_team?.name ?: "Unknown"
                     radiantTeamRV.adapter =
                         MatchDetailAdapter(
                             listOf(null) + proMatchDetail.players.take(5),
@@ -77,6 +97,8 @@ class MatchDetailFragment : Fragment() {
                             // reset Chart
                             chart.data = null
 
+                            graphIcons.visibility = View.GONE
+
                             // Zeige Goldvorteil im Graph an
                             addToChart(goldAdvantageList, goldColor, "Gold Advantage")
 
@@ -84,16 +106,27 @@ class MatchDetailFragment : Fragment() {
                                 // Zeige Expvorteil im Graph an
                                 addToChart(expAdvantageList, expColor, "Exp Advantage")
                             }
+
+                            //reset Zoom
+                            chart.fitScreen()
                             chart.legend.isEnabled = true
+
+                            // Notify damit sich Legend updated und korrekte Anzahl anzeigt
+                            chart.notifyDataSetChanged()
+
                             chart.animateXY(3000, 3000)
+
                         }
 
+
                         advantageChip.performClick()
+
                     }
 
                     if (proMatchDetail.players.filter { it.gold_t != null }.size == 10) {
                         graphChipGroup.visibility = View.VISIBLE
                         goldChip.visibility = View.VISIBLE
+
                         goldChip.setOnClickListener(
                             getChipListener(
                                 proMatchDetail,
@@ -106,6 +139,7 @@ class MatchDetailFragment : Fragment() {
                         graphChipGroup.visibility = View.VISIBLE
                         expChip.visibility = View.VISIBLE
 
+
                         expChip.setOnClickListener(
                             getChipListener(
                                 proMatchDetail,
@@ -113,9 +147,11 @@ class MatchDetailFragment : Fragment() {
                             )
                         )
                     }
-                    // Blende Loading aus
+                    // Blende Loading Screen aus
                     (requireContext() as MainActivity).showLoadingScreen(false, 750L)
                 }
+
+
             }
             return root
         }
@@ -128,16 +164,19 @@ class MatchDetailFragment : Fragment() {
 
         with(binding)
         {
-            chart.description.isEnabled = false
 
-            chart.legend.textColor = Color.WHITE
+            chart.apply {
+                this.description.isEnabled = false
+                this.legend.textColor = Color.WHITE
 
-            // blende Werte auf der rechten Seite aus & verschiebe X Werte nach unten
-            chart.axisRight.isEnabled = false
-            chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+                // blende Werte auf der rechten Seite aus & verschiebe X Werte nach unten
+                this.axisRight.isEnabled = false
+                this.xAxis.position = XAxis.XAxisPosition.BOTTOM
 
-            chart.xAxis.textColor = Color.WHITE
-            chart.axisLeft.textColor = Color.WHITE
+                this.xAxis.textColor = Color.WHITE
+                this.axisLeft.textColor = Color.WHITE
+            }
+
         }
     }
 
@@ -152,19 +191,19 @@ class MatchDetailFragment : Fragment() {
         val dataSet = LineDataSet(entryList, label)
 
         // blende Werte und Punkte im Graphen aus
-        dataSet.setDrawValues(false)
-        dataSet.setDrawCircles(false)
 
-        dataSet.color = color
-        dataSet.highLightColor = requireContext().getColor(R.color.textBlue)
+        dataSet.apply {
+            this.setDrawValues(false)
+            this.setDrawCircles(false)
+            this.color = color
+            this.highLightColor = requireContext().getColor(R.color.textBlue)
+        }
 
+        // Wenn Chart null ist, initialisiere mit LineData, ansonsten füge neue Daten hinzu
         binding.chart.data?.let {
             binding.chart.data.addDataSet(dataSet)
         } ?: run { binding.chart.data = LineData(dataSet) }
 
-        // Update y min/max für Darstellung
-        binding.chart.axisLeft.axisMinimum = binding.chart.data.yMin
-        binding.chart.axisLeft.axisMaximum = binding.chart.data.yMax
     }
 
     private fun getChipListener(
@@ -174,7 +213,7 @@ class MatchDetailFragment : Fragment() {
         OnClickListener {
             // reset Chart
             binding.chart.data = null
-
+            binding.graphIcons.visibility = View.VISIBLE
 
             // Iteriere Playerlist und füge die Daten dem Graphen hinzu
             proMatchDetail.players.forEachIndexed { index, player ->
@@ -186,10 +225,43 @@ class MatchDetailFragment : Fragment() {
                     playerColors[index],
                     player.account_id.toString()
                 )
+
+                graphIconList[index].load(res_url + player.hero.img)
+                val cardView = (graphIconList[index].parent as CardView)
+
+                cardView.apply {
+                    this.background = playerColors[index].toDrawable()
+                    this.setOnClickListener {
+
+
+                        // Blende jeweilige Dataset aus, wenn auf die Cardview gedrückt wird
+                        when {
+                            binding.chart.data.getDataSetByIndex(index).isVisible -> {
+
+                                binding.chart.data.getDataSetByIndex(index).isVisible = false
+                                binding.chart.invalidate()
+                                it.background =
+                                    requireContext().getColor(R.color.white).toDrawable()
+                            }
+
+                            !(binding.chart.data.getDataSetByIndex(index).isVisible) -> {
+                                binding.chart.invalidate()
+                                binding.chart.data.getDataSetByIndex(index).isVisible = true
+                                it.background = playerColors[index].toDrawable()
+                            }
+                        }
+
+                    }
+                }
+
+
             }
             binding.chart.legend.isEnabled = false
 
+            //reset Zoom
+            binding.chart.fitScreen()
+
+            binding.chart.notifyDataSetChanged()
             binding.chart.animateXY(3000, 3000)
         }
-
 }
