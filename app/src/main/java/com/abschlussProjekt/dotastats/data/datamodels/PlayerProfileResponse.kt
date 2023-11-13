@@ -1,5 +1,5 @@
 package com.abschlussProjekt.dotastats.data.datamodels
 
 data class PlayerProfileResponse(
-    val profile : PlayerProfile
+    val profile : PlayerProfileAPI
 )

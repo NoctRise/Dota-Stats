@@ -5,6 +5,7 @@
     <string name="duration">Duration</string>
 
 
+
     <string-array name="match_detail_title">
         <item>Player</item>
         <item>Lvl</item>
@@ -37,8 +38,6 @@
         <item>Items built</item>
         <item>Items in backpack</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

@@ -6,10 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import com.abschlussProjekt.dotastats.data.database.DotaStatsDatabase
 import com.abschlussProjekt.dotastats.data.datamodels.Player
 import com.abschlussProjekt.dotastats.data.datamodels.PlayerProfile
-import com.abschlussProjekt.dotastats.data.datamodels.PlayerRecentMatch
 import com.abschlussProjekt.dotastats.data.datamodels.ProMatch
 import com.abschlussProjekt.dotastats.data.datamodels.ProMatchDetail
 import com.abschlussProjekt.dotastats.data.datamodels.ProTeam
+import com.abschlussProjekt.dotastats.data.datamodels.TeamRecentMatch
 import com.abschlussProjekt.dotastats.data.datamodels.constants.Ability
 import com.abschlussProjekt.dotastats.data.datamodels.constants.Item
 
@@ -27,27 +27,34 @@ class Repository(
     val detailProMatch: LiveData<ProMatchDetail?>
         get() = _detailProMatch
 
-    private val _playerProfile = MutableLiveData<PlayerProfile>()
-    val playerProfile: LiveData<PlayerProfile>
+    private val _playerProfile = MutableLiveData<PlayerProfile?>()
+    val playerProfile: LiveData<PlayerProfile?>
         get() = _playerProfile
-
-    private val _playerWinLose = MutableLiveData<Map<String, Int>?>()
-    val playerWinLose: LiveData<Map<String, Int>?>
-        get() = _playerWinLose
 
     private val _proTeams = MutableLiveData<List<ProTeam>>()
     val proTeams: LiveData<List<ProTeam>>
         get() = _proTeams
 
-    private val _playerRecentMatches = MutableLiveData<List<PlayerRecentMatch>>()
-    val playerRecentMatches: LiveData<List<PlayerRecentMatch>>
-        get() = _playerRecentMatches
+    private val _proTeamRecentMatches = MutableLiveData<List<TeamRecentMatch>?>()
+
+    val proTeamRecentMatches: LiveData<List<TeamRecentMatch>?>
+        get() = _proTeamRecentMatches
 
     suspend fun getTeams() {
         try {
             _proTeams.postValue(apiService.getTeams())
         } catch (ex: Exception) {
             Log.e("$TAG-getTeams", "Error loading data from api: $ex")
+        }
+    }
+
+    suspend fun getTeamRecentMatches(teamID: Long) {
+        try {
+            _proTeamRecentMatches.postValue(null)
+            _proTeamRecentMatches.postValue(apiService.getTeamRecentMatches(teamID))
+
+        } catch (ex: Exception) {
+            Log.e("$TAG-getTeamRecentMatches", "Error loading data from api: $ex")
         }
     }
 
@@ -76,7 +83,7 @@ class Repository(
                 val playerAbilities = mutableListOf<Ability>()
 
 
-                player.ability_upgrades_arr.forEach { abilityID ->
+                player.ability_upgrades_arr?.forEach { abilityID ->
                     if (!abilities.containsKey(abilityID)) {
                         val ability = database.dotaStatsDao.getAbilityByID(abilityID)
                         playerAbilities.add(ability)
@@ -129,26 +136,16 @@ class Repository(
 
     suspend fun getPlayerProfileByID(accountID: Long) {
         try {
-            _playerProfile.postValue(apiService.getPlayerProfileByID(accountID).profile)
-        } catch (ex: Exception) {
-            Log.e("$TAG-getPlayerRecentMatchesByID", "Error loading data from api: $ex")
-        }
-    }
+            _playerProfile.postValue(null)
 
-    suspend fun getPlayerWinLoseByID(accountID: Long) {
-        try {
-            _playerWinLose.postValue(null)
-            _playerWinLose.postValue(apiService.getPlayerWinLoseByID(accountID))
-        } catch (ex: Exception) {
-            Log.e("$TAG-getPlayerRecentMatchesByID", "Error loading data from api: $ex")
-        }
-    }
-
-    suspend fun getPlayerRecentMatchesByID(accountID: Long) {
-        try {
+            val profileAPI = apiService.getPlayerProfileByID(accountID).profile
+            val winLose = apiService.getPlayerWinLoseByID(accountID)
             val matches = apiService.getPlayerRecentMatchesByID(accountID)
             matches.forEach { it.hero = database.dotaStatsDao.getHeroByID(it.hero_id) }
-            _playerRecentMatches.postValue(matches)
+
+            val playerProfile = PlayerProfile(profileAPI, winLose, matches)
+            _playerProfile.postValue(playerProfile)
+
         } catch (ex: Exception) {
             Log.e("$TAG-getPlayerRecentMatchesByID", "Error loading data from api: $ex")
         }

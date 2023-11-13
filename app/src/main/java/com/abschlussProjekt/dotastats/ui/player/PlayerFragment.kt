@@ -12,6 +12,7 @@ import coil.transform.RoundedCornersTransformation
 import com.abschlussProjekt.dotastats.MainActivity
 import com.abschlussProjekt.dotastats.databinding.FragmentPlayerBinding
 import com.abschlussProjekt.dotastats.ui.DotaViewModel
+import com.abschlussProjekt.dotastats.util.calcWinRate
 
 
 class PlayerFragment : Fragment() {
@@ -34,43 +35,40 @@ class PlayerFragment : Fragment() {
         val accountID = requireArguments().getLong("accId")
 
         viewModel.getPlayerProfileByID(accountID)
-        viewModel.getPlayerWinLoseByID(accountID)
-        viewModel.getPlayerRecentMatchesByID(accountID)
 
 
-        // Inflate the layout for this fragment
         viewModel.playerProfile.observe(viewLifecycleOwner) {
-            binding.profileIV.load(it.avatarfull) {
-                transformations(RoundedCornersTransformation(250F))
-            }
-            binding.nameTV.text = it.name ?: it.personaname
-        }
-
-        viewModel.playerWinLose.observe(viewLifecycleOwner)
-        {
             it?.let {
-                with(binding)
-                {
+
+                Log.e("profile", it.toString())
+
+                with(binding) {
+
+                    profileIV.load(it.playerProfileAPI.avatarfull) {
+                        transformations(RoundedCornersTransformation(250F))
+                    }
+                    nameTV.text =
+                        it.playerProfileAPI.name ?: it.playerProfileAPI.personaname
+
+                    winValueTV.text = it.winLose["win"].toString()
+                    lossValueTV.text = it.winLose["lose"].toString()
+                    winrateValueTV.text = calcWinRate(it.winLose)
                     statsLayout.visibility = View.VISIBLE
-                    winValueTV.text = it["win"].toString()
-                    lossValueTV.text = it["lose"].toString()
-                    winrateValueTV.text = calcWinRate(it)
 
-                    (requireContext() as MainActivity).showLoadingScreen(false,750L)
+
+                    binding.playerProfileRV.adapter = PlayerAdapter(it.recentMatches)
+                    Log.e("PlayerMatches", it.toString())
+
                 }
-            }
-        }
+                if(binding.playerProfileRV.adapter != null){
+                    (requireContext() as MainActivity).showLoadingScreen(false, 1000L)
+                }
 
-        viewModel.playerRecentMatches.observe(viewLifecycleOwner) {
-                binding.playerProfileRV.adapter = PlayerAdapter(it)
-                Log.e("PlayerMatches", it.toString())
+
+            }
         }
         return binding.root
     }
 
-    private fun calcWinRate(stats: Map<String, Int>): String {
-        val totalMatches = stats["win"]!! + stats["lose"]!!
-        val winRate = ((stats["win"]!!.toDouble() / totalMatches) * 100)
-        return "${String.format("%.2f", winRate)}%"
-    }
+
 }

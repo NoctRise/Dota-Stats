@@ -2,10 +2,12 @@ package com.abschlussProjekt.dotastats.ui.player
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.abschlussProjekt.dotastats.data.datamodels.PlayerRecentMatch
 import com.abschlussProjekt.dotastats.databinding.PlayerRecentMatchListItemBinding
+import com.abschlussProjekt.dotastats.util.getDurationBetween
 import com.abschlussProjekt.dotastats.util.getMatchDuration
 import com.abschlussProjekt.dotastats.util.res_url
 
@@ -40,6 +42,13 @@ class PlayerAdapter(
             heroNameTV.text = match.hero!!.name
             kdaTV.text = "${match.kills}/${match.deaths}/${match.assists}"
             matchDurationTV.text = getMatchDuration(match.duration)
+            playerLastMatchTimeTV.text = getDurationBetween(match.start_time)
+
+            playerRecentMatchItem.setOnClickListener {
+                it.findNavController().navigate(
+                    PlayerFragmentDirections.actionPlayerFragmentToMatchDetailFragment(match.match_id)
+                )
+            }
         }
     }
 }

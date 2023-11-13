@@ -1,9 +1,7 @@
 package com.abschlussProjekt.dotastats.data.datamodels
 
-data class PlayerProfile(
-    val account_id: Long,
-    val personaname: String,
-    val name: String?,
-    val avatarfull: String,
-    val last_login: String?
+data class PlayerProfile (
+    val playerProfileAPI: PlayerProfileAPI,
+    val winLose : Map<String,Int>,
+    val recentMatches: List<PlayerRecentMatch>
 )

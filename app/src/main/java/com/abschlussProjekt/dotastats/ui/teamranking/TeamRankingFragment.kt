@@ -30,11 +30,16 @@ class TeamRankingFragment : Fragment() {
     ): View {
 
         (requireContext() as MainActivity).showLoadingScreen(true)
-        viewModel.getTeams()
+
+        if (viewModel.proTeams.value == null)
+            viewModel.getTeams()
+
         viewModel.proTeams.observe(viewLifecycleOwner) {
             (requireContext() as MainActivity).showLoadingScreen(false)
             binding.teamRankingRV.adapter =
-                TeamRankingAdapter(it.filter { team -> isActive(team.last_match_time) }.take(100))
+                TeamRankingAdapter(
+                    it.filter { team -> isActive(team.last_match_time) }.take(100)
+                )
         }
         return binding.root
     }

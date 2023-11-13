@@ -56,7 +56,9 @@ class MatchDetailAdapter(
 
                     val onClickListener = OnClickListener {
                         it.findNavController().navigate(
-                            MatchDetailFragmentDirections.actionMatchDetailFragmentToPlayerFragment(player.account_id)
+                            MatchDetailFragmentDirections.actionMatchDetailFragmentToPlayerFragment(
+                                player.account_id!!
+                            )
                         )
                     }
                     heroIV.setOnClickListener(onClickListener)
@@ -76,6 +78,17 @@ class MatchDetailAdapter(
                             )
                             "Anonymous"
                         }
+                    }
+
+                    if (player.account_id == null) {
+                        playerNameTV.setOnClickListener(null)
+                        heroIV.setOnClickListener(null)
+                        playerNameTV.setTextColor(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.textColor
+                            )
+                        )
                     }
 
                     heroIV.load(res_url + player.hero.img)

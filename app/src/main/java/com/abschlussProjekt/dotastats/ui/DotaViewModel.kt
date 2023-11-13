@@ -23,9 +23,7 @@ class DotaViewModel(application: Application) : AndroidViewModel(application) {
 
     val playerProfile = repository.playerProfile
 
-    val playerWinLose = repository.playerWinLose
-
-    val playerRecentMatches = repository.playerRecentMatches
+    val proTeamRecentMatches = repository.proTeamRecentMatches
 
     init {
         initDB()
@@ -45,15 +43,11 @@ class DotaViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) { repository.getTeams() }
     }
 
+    fun getTeamRecentMatches(teamID: Long) {
+        viewModelScope.launch(Dispatchers.IO) { repository.getTeamRecentMatches(teamID) }
+    }
+
     fun getPlayerProfileByID(accountID: Long) {
         viewModelScope.launch(Dispatchers.IO) { repository.getPlayerProfileByID(accountID) }
-    }
-
-    fun getPlayerWinLoseByID(accountID: Long) {
-        viewModelScope.launch(Dispatchers.IO) { repository.getPlayerWinLoseByID(accountID) }
-    }
-
-    fun getPlayerRecentMatchesByID(accountID: Long) {
-        viewModelScope.launch(Dispatchers.IO) { repository.getPlayerRecentMatchesByID(accountID) }
     }
 }

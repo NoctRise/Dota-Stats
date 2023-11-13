@@ -14,7 +14,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radiantTitleTV" />
+        app:layout_constraintTop_toBottomOf="@+id/recentMatchesTitleTV" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/matchRecyclerView"
@@ -28,40 +28,16 @@
         tools:listitem="@layout/match_list_item" />
 
     <TextView
-        android:id="@+id/radiantTitleTV"
+        android:id="@+id/recentMatchesTitleTV"
+        style="@style/textHeadline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
         android:layout_marginTop="16dp"
-        android:text="@string/radiant"
-        style="@style/textHeadline"
+        android:text="Recent Matches"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <TextView
-        android:id="@+id/direTitleTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="218dp"
-        android:text="@string/dire"
-        android:textSize="20sp"
-        style="@style/textHeadline"
-        app:layout_constraintBottom_toBottomOf="@+id/radiantTitleTV"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/radiantTitleTV" />
-
-    <TextView
-        android:id="@+id/durationTitleTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="@string/duration"
-        android:textSize="20sp"
-        style="@style/textHeadline"
-        app:layout_constraintBottom_toBottomOf="@+id/direTitleTV"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/direTitleTV" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

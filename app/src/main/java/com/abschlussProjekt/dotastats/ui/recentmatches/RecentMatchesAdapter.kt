@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.abschlussProjekt.dotastats.data.datamodels.ProMatch
 import com.abschlussProjekt.dotastats.databinding.MatchListItemBinding
+import com.abschlussProjekt.dotastats.util.getDurationBetween
 import com.abschlussProjekt.dotastats.util.getMatchDuration
 
 class RecentMatchesAdapter(
@@ -47,6 +48,8 @@ class RecentMatchesAdapter(
                 radiantWinIV.visibility = View.INVISIBLE
                 direWinIV.visibility = View.VISIBLE
             }
+
+            matchTimeTV.text = getDurationBetween(match.start_time)
 
             constraintLayout.setOnClickListener {
 

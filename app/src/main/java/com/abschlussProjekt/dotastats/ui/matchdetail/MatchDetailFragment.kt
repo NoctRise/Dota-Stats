@@ -76,6 +76,7 @@ class MatchDetailFragment : Fragment() {
 
                     detailRadiantTV.text = proMatchDetail.radiant_team?.name ?: "Unknown"
                     direDetailTV.text = proMatchDetail.dire_team?.name ?: "Unknown"
+
                     radiantTeamRV.adapter =
                         MatchDetailAdapter(
                             listOf(null) + proMatchDetail.players.take(5),
@@ -86,6 +87,19 @@ class MatchDetailFragment : Fragment() {
                             listOf(null) + proMatchDetail.players.takeLast(5),
                             requireContext()
                         )
+
+                    when (it.radiant_win) {
+                        true -> {
+                            radiantWonIV.visibility = View.VISIBLE
+                            direWonIV.visibility = View.GONE
+                        }
+
+                        else -> {
+                            radiantWonIV.visibility = View.GONE
+                            direWonIV.visibility = View.VISIBLE
+                        }
+                    }
+
                     // Wenn Daten vorhanden sind, zeige Chart an
                     proMatchDetail.radiant_gold_adv?.let { goldAdvantageList ->
                         initChart()

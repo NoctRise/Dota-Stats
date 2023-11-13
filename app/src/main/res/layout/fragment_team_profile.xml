@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.teamprofile.TeamProfileFragment">
+
+    <ImageView
+        android:id="@+id/teamIV"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/baseline_image_not_supported_24"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/teamNameDivider" />
+
+    <View
+        android:id="@+id/teamNameDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/textColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teamProfileNameTV" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/teamRecentMatchesRV"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvDivider"
+        tools:listitem="@layout/team_recent_match_list_item" />
+
+    <TextView
+        android:id="@+id/teamProfileNameTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/teamWinsTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:minWidth="50dp"
+        android:text="Wins"
+        android:textAlignment="textStart"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/teamIV" />
+
+    <TextView
+        android:id="@+id/teamLossTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:minWidth="50dp"
+        android:text="Losses"
+        app:layout_constraintStart_toStartOf="@+id/teamWinsTV"
+        app:layout_constraintTop_toBottomOf="@+id/teamWinsTV" />
+
+    <TextView
+        android:id="@+id/teamWinsValueTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/green"
+        app:layout_constraintBottom_toBottomOf="@+id/teamWinsTV"
+        app:layout_constraintStart_toEndOf="@+id/teamWinsTV"
+        app:layout_constraintTop_toTopOf="@+id/teamWinsTV" />
+
+    <TextView
+        android:id="@+id/teamLossValueTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/red"
+        app:layout_constraintBottom_toBottomOf="@+id/teamLossTV"
+        app:layout_constraintStart_toEndOf="@+id/teamLossTV"
+        app:layout_constraintTop_toTopOf="@+id/teamLossTV" />
+
+    <TextView
+        android:id="@+id/teamsRatingTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:minWidth="50dp"
+        android:text="Rating"
+        app:layout_constraintStart_toStartOf="@+id/teamWinRateTV"
+        app:layout_constraintTop_toBottomOf="@+id/teamWinRateTV" />
+
+    <TextView
+        android:id="@+id/teamsRatingValueTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/teamsRatingTV"
+        app:layout_constraintStart_toEndOf="@+id/teamsRatingTV"
+        app:layout_constraintTop_toTopOf="@+id/teamsRatingTV" />
+
+    <TextView
+        android:id="@+id/teamWinRateTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:minWidth="50dp"
+        android:text="Winrate"
+        app:layout_constraintStart_toStartOf="@+id/teamLossTV"
+        app:layout_constraintTop_toBottomOf="@+id/teamLossTV" />
+
+    <TextView
+        android:id="@+id/teamWinRateValueTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/textBlue"
+        app:layout_constraintBottom_toBottomOf="@+id/teamWinRateTV"
+        app:layout_constraintStart_toEndOf="@+id/teamWinRateTV"
+        app:layout_constraintTop_toTopOf="@+id/teamWinRateTV" />
+
+    <View
+        android:id="@+id/rvDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/textColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teamIV" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,7 +30,11 @@
         android:id="@+id/teamRankingFragment"
         android:name="com.abschlussProjekt.dotastats.ui.teamranking.TeamRankingFragment"
         android:label="fragment_team_ranking"
-        tools:layout="@layout/fragment_team_ranking" />
+        tools:layout="@layout/fragment_team_ranking" >
+        <action
+            android:id="@+id/action_teamRankingFragment_to_teamProfileFragment"
+            app:destination="@id/teamProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/playerFragment"
         android:name="com.abschlussProjekt.dotastats.ui.player.PlayerFragment"
@@ -39,5 +43,20 @@
         <argument
             android:name="accId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_playerFragment_to_matchDetailFragment"
+            app:destination="@id/matchDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamProfileFragment"
+        android:name="com.abschlussProjekt.dotastats.ui.teamprofile.TeamProfileFragment"
+        android:label="fragment_team_profile"
+        tools:layout="@layout/fragment_team_profile" >
+        <argument
+            android:name="id"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_teamProfileFragment_to_matchDetailFragment"
+            app:destination="@id/matchDetailFragment" />
     </fragment>
 </navigation>
