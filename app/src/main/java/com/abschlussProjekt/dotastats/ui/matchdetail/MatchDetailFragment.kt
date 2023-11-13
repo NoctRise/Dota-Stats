@@ -22,6 +22,8 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
+import kotlin.math.abs
 
 
 class MatchDetailFragment : Fragment() {
@@ -99,6 +101,25 @@ class MatchDetailFragment : Fragment() {
                             direWonIV.visibility = View.VISIBLE
                         }
                     }
+
+
+                    // Füge "min" zu den X Achsenwerten hinzu
+                    chart.xAxis.valueFormatter = object : ValueFormatter() {
+
+                        override fun getFormattedValue(value: Float): String {
+                            return "${value.toInt()}min"
+                        }
+                    }
+
+                    // Zeige absolut Werte auf der Y Achse an
+                    chart.axisLeft.valueFormatter = object : ValueFormatter() {
+
+                        override fun getFormattedValue(value: Float): String {
+                            return "${abs(value.toInt())}"
+                        }
+                    }
+                    // Erhöhe Abstand zwischen der Chart und der Legende
+                    chart.extraBottomOffset = 8F
 
                     // Wenn Daten vorhanden sind, zeige Chart an
                     proMatchDetail.radiant_gold_adv?.let { goldAdvantageList ->
