@@ -9,6 +9,7 @@ data class Ability(
     @PrimaryKey
     var id: Long?,
     @Json(name = "dname")
-    val name : String?,
-    val img : String?
+    val name: String?,
+    val img: String?,
+    var skill_id_name: String?
 )

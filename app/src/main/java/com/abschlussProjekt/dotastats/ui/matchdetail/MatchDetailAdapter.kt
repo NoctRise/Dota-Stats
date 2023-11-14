@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.navigation.findNavController
@@ -46,7 +45,6 @@ class MatchDetailAdapter(
         return dataset.size
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val player = dataset[position]
 
@@ -152,10 +150,15 @@ class MatchDetailAdapter(
                     val nameList = context.resources.getStringArray(R.array.match_detail_title)
                     val toolTipTextList =
                         context.resources.getStringArray(R.array.match_detail_tooltip)
+
                     viewList.forEachIndexed { index, textView ->
                         textView.setTextColor(context.getColor(R.color.white))
                         textView.text = nameList[index]
-                        textView.tooltipText = toolTipTextList[index]
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            textView.tooltipText = toolTipTextList[index]
+                        }
+
                     }
 
                     heroIV.visibility = View.INVISIBLE

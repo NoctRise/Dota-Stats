@@ -179,10 +179,12 @@ class Repository(
             // Hole alle Abilities
             val abilities = apiService.getAbilities()
 
-            // Iteriere durch die Map und füge die ID's den Abilities hinzu
+            // Iteriere durch die Map, hole über den Namen die ID und füge sie den Abilities hinzu
             abilities.forEach {
                 it.value.id = iDMap[it.key]?.toLong()
+                it.value.skill_id_name = it.key
             }
+
 
             // wandle Map zur Liste und speichere sie in die DB
             database.dotaStatsDao.insertAbilityList(abilities.values.toList())

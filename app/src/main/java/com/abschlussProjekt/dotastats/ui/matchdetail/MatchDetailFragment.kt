@@ -2,6 +2,7 @@ package com.abschlussProjekt.dotastats.ui.matchdetail
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
@@ -24,6 +25,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import kotlin.math.abs
+import kotlin.math.ceil
 
 
 class MatchDetailFragment : Fragment() {
@@ -115,7 +117,7 @@ class MatchDetailFragment : Fragment() {
                     chart.axisLeft.valueFormatter = object : ValueFormatter() {
 
                         override fun getFormattedValue(value: Float): String {
-                            return "${abs(value.toInt())}"
+                            return "${ceil(abs(value)).toInt()}"
                         }
                     }
                     // Erhöhe Abstand zwischen der Chart und der Legende
@@ -183,6 +185,23 @@ class MatchDetailFragment : Fragment() {
                             )
                         )
                     }
+
+                    if (proMatchDetail.players.filter { it.ability_upgrades_arr != null }.size == 10) {
+                        radiantUpgradeArrSV.visibility = View.VISIBLE
+                        direUpgradeArrSV.visibility = View.VISIBLE
+
+                        Log.e("arr", "upgrades vorhanden")
+                        radiantUpgradeArrRV.adapter = AbilityUpgradeArrAdapter(
+                            listOf(null) +
+                                    proMatchDetail.players.take(5),
+                            requireContext(), proMatchDetail.players.maxOf { it.level }
+                        )
+                        direUpgradeArrRV.adapter = AbilityUpgradeArrAdapter(
+                            listOf(null) +
+                                    proMatchDetail.players.takeLast(5),
+                            requireContext(), proMatchDetail.players.maxOf { it.level })
+                    }
+
                     // Blende Loading Screen aus
                     (requireContext() as MainActivity).showLoadingScreen(false, 750L)
                 }

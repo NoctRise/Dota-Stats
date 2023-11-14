@@ -27,9 +27,7 @@
                     android:id="@+id/radiantWonIV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginBottom="16dp"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +52,7 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="40dp"
                 android:scrollbars="none">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -77,9 +75,7 @@
                     android:id="@+id/direWonIV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginBottom="16dp"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -104,7 +100,7 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="40dp"
                 android:scrollbars="none">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -119,11 +115,40 @@
                 </androidx.recyclerview.widget.RecyclerView>
             </HorizontalScrollView>
 
+            <HorizontalScrollView
+                android:id="@+id/radiantUpgradeArrSV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="40dp"
+                android:visibility="gone">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/radiantUpgradeArrRV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            </HorizontalScrollView>
+
+            <HorizontalScrollView
+                android:id="@+id/direUpgradeArrSV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="40dp"
+                android:visibility="gone">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/direUpgradeArrRV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            </HorizontalScrollView>
+
             <LinearLayout
                 android:id="@+id/graphChipGroup"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="0dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:visibility="gone">
