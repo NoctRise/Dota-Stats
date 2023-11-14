@@ -26,16 +26,16 @@ class TeamProfileFragment : Fragment() {
 
     private val viewModel: DotaViewModel by activityViewModels()
 
+    private var teamID = 0L
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
         (requireContext() as MainActivity).showLoadingScreen(true)
-        val teamID = requireArguments().getLong("id")
-        viewModel.getTeamRecentMatches(teamID)
+        teamID = requireArguments().getLong("id")
 
-        viewModel.proTeamRecentMatches.observe(viewLifecycleOwner) {teamRecentMatchesList ->
+        viewModel.proTeamRecentMatches.observe(viewLifecycleOwner) { teamRecentMatchesList ->
             teamRecentMatchesList?.let {
                 Log.e("Team", teamRecentMatchesList.toString())
                 val teamProfile = viewModel.proTeams.value?.find { team ->
@@ -66,7 +66,12 @@ class TeamProfileFragment : Fragment() {
                 Log.e("TeamPro", "$teamProfile")
             }
         }
-
         return binding.root
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getTeamRecentMatches(teamID)
     }
 }

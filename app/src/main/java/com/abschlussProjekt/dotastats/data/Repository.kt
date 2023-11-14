@@ -40,11 +40,17 @@ class Repository(
     val proTeamRecentMatches: LiveData<List<TeamRecentMatch>?>
         get() = _proTeamRecentMatches
 
+    private val _errorMessage = MutableLiveData<String?>()
+
+    val errorMessage: LiveData<String?>
+        get() = _errorMessage
+
     suspend fun getTeams() {
         try {
             _proTeams.postValue(apiService.getTeams())
         } catch (ex: Exception) {
             Log.e("$TAG-getTeams", "Error loading data from api: $ex")
+            _errorMessage.postValue(ex.message)
         }
     }
 
@@ -55,6 +61,7 @@ class Repository(
 
         } catch (ex: Exception) {
             Log.e("$TAG-getTeamRecentMatches", "Error loading data from api: $ex")
+            _errorMessage.postValue(ex.message)
         }
     }
 
@@ -65,6 +72,7 @@ class Repository(
             _recentProMatches.postValue(apiService.getRecentProMatches())
         } catch (ex: Exception) {
             Log.e("$TAG-getRecentProMatches", "Error loading data from api: $ex")
+            _errorMessage.postValue(ex.message)
         }
     }
 
@@ -117,6 +125,7 @@ class Repository(
 
         } catch (ex: Exception) {
             Log.e("$TAG-getMatchById", "Error loading data from api: $ex")
+            _errorMessage.postValue(ex.message)
         }
     }
 
@@ -148,6 +157,7 @@ class Repository(
 
         } catch (ex: Exception) {
             Log.e("$TAG-getPlayerRecentMatchesByID", "Error loading data from api: $ex")
+            _errorMessage.postValue(ex.message)
         }
     }
 
@@ -185,9 +195,10 @@ class Repository(
                 it.value.skill_id_name = it.key
             }
 
-
             // wandle Map zur Liste und speichere sie in die DB
             database.dotaStatsDao.insertAbilityList(abilities.values.toList())
         }
     }
+
+    fun resetError() = _errorMessage.postValue(null)
 }

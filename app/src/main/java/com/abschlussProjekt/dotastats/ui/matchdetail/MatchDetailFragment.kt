@@ -41,6 +41,8 @@ class MatchDetailFragment : Fragment() {
 
     private lateinit var graphIconList: List<ImageView>
 
+
+    private var matchId = 0L
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,9 +51,6 @@ class MatchDetailFragment : Fragment() {
 
         // Rufe Ladescreen auf
         (requireContext() as MainActivity).showLoadingScreen(true)
-
-        val matchId = requireArguments().getLong("id")
-        viewModel.getMatchById(matchId)
 
         graphIconList = listOf(
             binding.radiantIcon1,
@@ -68,6 +67,8 @@ class MatchDetailFragment : Fragment() {
 
 
         playerColors = requireContext().resources.getIntArray(R.array.playerColors)
+
+        matchId = requireArguments().getLong("id")
 
         with(binding) {
 
@@ -209,6 +210,11 @@ class MatchDetailFragment : Fragment() {
             return root
         }
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getMatchById(matchId)
     }
 
 

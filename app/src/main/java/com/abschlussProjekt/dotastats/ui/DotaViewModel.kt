@@ -25,6 +25,8 @@ class DotaViewModel(application: Application) : AndroidViewModel(application) {
 
     val proTeamRecentMatches = repository.proTeamRecentMatches
 
+    val errorMessage = repository.errorMessage
+
     init {
         initDB()
     }
@@ -50,4 +52,7 @@ class DotaViewModel(application: Application) : AndroidViewModel(application) {
     fun getPlayerProfileByID(accountID: Long) {
         viewModelScope.launch(Dispatchers.IO) { repository.getPlayerProfileByID(accountID) }
     }
+
+    fun resetError() = repository.resetError()
+
 }

@@ -32,10 +32,6 @@ class PlayerFragment : Fragment() {
 
         (requireContext() as MainActivity).showLoadingScreen(true)
 
-        val accountID = requireArguments().getLong("accId")
-
-        viewModel.getPlayerProfileByID(accountID)
-
 
         viewModel.playerProfile.observe(viewLifecycleOwner) {
             it?.let {
@@ -57,18 +53,20 @@ class PlayerFragment : Fragment() {
 
 
                     binding.playerProfileRV.adapter = PlayerAdapter(it.recentMatches)
-                    Log.e("PlayerMatches", it.toString())
-
-                }
-                if(binding.playerProfileRV.adapter != null){
-                    (requireContext() as MainActivity).showLoadingScreen(false, 1000L)
                 }
 
+                (requireContext() as MainActivity).showLoadingScreen(false, 1000L)
 
             }
         }
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
 
+        val accountID = requireArguments().getLong("accId")
+
+        viewModel.getPlayerProfileByID(accountID)
+    }
 }

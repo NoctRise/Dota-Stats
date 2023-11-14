@@ -31,8 +31,6 @@ class TeamRankingFragment : Fragment() {
 
         (requireContext() as MainActivity).showLoadingScreen(true)
 
-        if (viewModel.proTeams.value == null)
-            viewModel.getTeams()
 
         viewModel.proTeams.observe(viewLifecycleOwner) {
             (requireContext() as MainActivity).showLoadingScreen(false)
@@ -57,5 +55,12 @@ class TeamRankingFragment : Fragment() {
             timeDiffInDays <= 180 -> true
             else -> false
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if (viewModel.proTeams.value == null)
+            viewModel.getTeams()
     }
 }

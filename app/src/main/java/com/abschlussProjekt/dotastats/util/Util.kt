@@ -1,7 +1,5 @@
 package com.abschlussProjekt.dotastats.util
 
-import android.util.Log
-
 
 const val res_url = "https://api.opendota.com"
 fun getMatchDuration(seconds: Int): String {
@@ -58,9 +56,6 @@ fun getDurationBetween(startTime: Long): String {
             break
         }
     }
-
-    Log.e("OutputValue", outputValue.toString())
-    Log.e("OutputString", outputString)
 
     return when {
         outputValue == 1L -> {

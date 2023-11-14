@@ -27,8 +27,6 @@ class RecentMatchesFragment : Fragment() {
     ): View {
         // Rufe Ladescreen auf und lade Daten von API
         (requireContext() as MainActivity).showLoadingScreen(true)
-        viewModel.getRecentProMatches()
-
 
         viewModel.recentProMatches.observe(viewLifecycleOwner) {
             (requireContext() as MainActivity).showLoadingScreen(false)
@@ -38,5 +36,11 @@ class RecentMatchesFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getRecentProMatches()
     }
 }
