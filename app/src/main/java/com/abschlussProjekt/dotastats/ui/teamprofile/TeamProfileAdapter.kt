@@ -50,7 +50,7 @@ class TeamProfileAdapter(
                 error(R.drawable.baseline_image_not_supported_24)
             }
             teamMatchDuration.text = getMatchDuration(match.duration)
-            lastMatchTimeTV.text = getDurationBetween(match.start_time)
+            lastMatchTimeTV.text = getDurationBetween(match.start_time + match.duration)
 
 
             teamRecentMatchLayout.setOnClickListener {

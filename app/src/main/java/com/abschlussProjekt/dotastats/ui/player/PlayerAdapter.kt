@@ -41,7 +41,7 @@ class PlayerAdapter(
             playerHeroIV.load(res_url + match.hero!!.img)
             kdaTV.text = "${match.kills}/${match.deaths}/${match.assists}"
             matchDurationTV.text = getMatchDuration(match.duration)
-            playerLastMatchTimeTV.text = getDurationBetween(match.start_time)
+            playerLastMatchTimeTV.text = getDurationBetween(match.start_time + match.duration)
 
 
             val isRadiant = match.player_slot <= 127

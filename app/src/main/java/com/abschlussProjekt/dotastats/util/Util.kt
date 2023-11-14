@@ -1,5 +1,7 @@
 package com.abschlussProjekt.dotastats.util
 
+import android.util.Log
+
 
 const val res_url = "https://api.opendota.com"
 fun getMatchDuration(seconds: Int): String {
@@ -42,36 +44,35 @@ fun getDurationBetween(startTime: Long): String {
     val months = duration / (1000 * 60 * 60 * 24) / 30
     val years: Long = duration / (1000L * 60 * 60 * 24 * 30) / 12
 
+    val times = listOf(years, months, days, hour, min, sec)
+    val timeString = listOf("year", "month", "day", "hour", "min", "second")
 
+    var outputValue = 0L
+    var outputString = ""
+
+
+    for (i in times.indices) {
+        if (times[i] >= 1) {
+            outputValue = times[i]
+            outputString = timeString[i]
+            break
+        }
+    }
+
+    Log.e("OutputValue", outputValue.toString())
+    Log.e("OutputString", outputString)
 
     return when {
-        years >= 1 -> {
-            if (years == 1L) "a year ago" else "$years years ago"
+        outputValue == 1L -> {
+            if (outputString != "second") "a $outputString ago" else "a second ago"
         }
 
-        months >= 1 -> {
-            if (months == 1L) "a month ago" else "$months months ago"
-        }
-
-        days >= 1 -> {
-            if (days == 1L) "a day ago" else "$days days ago"
-        }
-
-        hour >= 1 -> {
-            if (hour == 1L) "a hour ago" else "$hour hours ago"
-        }
-
-        min >= 1 -> {
-            if (min == 1L) "a min ago" else "$min min ago"
-        }
-
-        sec >= 1 -> {
-            if (sec == 1L) "a sec ago" else "$sec seconds ago"
+        outputValue > 1L -> {
+            if (outputString != "min") "$outputValue ${outputString}s ago" else "$outputValue $outputString ago"
         }
 
         else -> {
             "error"
         }
-
     }
 }

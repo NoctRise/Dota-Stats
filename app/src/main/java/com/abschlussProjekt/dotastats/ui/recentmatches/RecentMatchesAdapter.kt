@@ -49,7 +49,7 @@ class RecentMatchesAdapter(
                 direWinIV.visibility = View.VISIBLE
             }
 
-            matchTimeTV.text = getDurationBetween(match.start_time)
+            matchTimeTV.text = getDurationBetween(match.start_time + match.duration)
 
             constraintLayout.setOnClickListener {
 
