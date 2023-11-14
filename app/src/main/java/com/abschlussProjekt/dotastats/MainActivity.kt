@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
             layoutInflater
         )
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -33,11 +32,6 @@ class MainActivity : AppCompatActivity() {
             if (navController.currentDestination!!.id != menuItem.itemId) {
                 navController.navigate(menuItem.itemId)
             }
-
-//            navController.currentBackStack.value.find { it.destination.id == menuItem.itemId }
-//                ?.let {
-//                    navController.popBackStack(menuItem.itemId, false)
-//                } ?: navController.navigate(menuItem.itemId)
             true
         }
     }
@@ -51,16 +45,19 @@ class MainActivity : AppCompatActivity() {
             when (show) {
                 true -> {
                     binding.loadingGifLayout.visibility = View.VISIBLE
-                    binding.bottomNavBar.menu[0].isEnabled = false
-                    binding.bottomNavBar.menu[1].isEnabled = false
+                    disableBottomNavBar(true)
                 }
-
                 else -> {
                     binding.loadingGifLayout.visibility = View.INVISIBLE
-                    binding.bottomNavBar.menu[0].isEnabled = true
-                    binding.bottomNavBar.menu[1].isEnabled = true
+                    disableBottomNavBar(false)
                 }
             }
         }
     }
+
+    private fun disableBottomNavBar(disable: Boolean) {
+        binding.bottomNavBar.menu[0].isEnabled = !disable
+        binding.bottomNavBar.menu[1].isEnabled = !disable
+    }
+
 }

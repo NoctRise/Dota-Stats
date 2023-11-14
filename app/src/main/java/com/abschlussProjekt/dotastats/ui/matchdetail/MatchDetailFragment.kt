@@ -2,7 +2,6 @@ package com.abschlussProjekt.dotastats.ui.matchdetail
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
@@ -190,7 +189,6 @@ class MatchDetailFragment : Fragment() {
                         radiantUpgradeArrSV.visibility = View.VISIBLE
                         direUpgradeArrSV.visibility = View.VISIBLE
 
-                        Log.e("arr", "upgrades vorhanden")
                         radiantUpgradeArrRV.adapter = AbilityUpgradeArrAdapter(
                             listOf(null) +
                                     proMatchDetail.players.take(5),
