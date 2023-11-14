@@ -39,10 +39,14 @@ class PlayerAdapter(
 
         with(holder.binding) {
             playerHeroIV.load(res_url + match.hero!!.img)
-            heroNameTV.text = match.hero!!.name
             kdaTV.text = "${match.kills}/${match.deaths}/${match.assists}"
             matchDurationTV.text = getMatchDuration(match.duration)
             playerLastMatchTimeTV.text = getDurationBetween(match.start_time)
+
+
+            val isRadiant = match.player_slot <= 127
+            val won = match.radiant_win == isRadiant
+            playerMatchResultTV.text = if (won) "Won" else "Lost"
 
             playerRecentMatchItem.setOnClickListener {
                 it.findNavController().navigate(

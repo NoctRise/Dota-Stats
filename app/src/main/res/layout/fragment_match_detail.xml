@@ -54,13 +54,13 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="24dp"
                 android:scrollbars="none">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/radiantTeamRV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="32dp"
                     android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="5"
@@ -104,6 +104,7 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="24dp"
                 android:scrollbars="none">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -122,7 +123,7 @@
                 android:id="@+id/graphChipGroup"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="0dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:visibility="gone">

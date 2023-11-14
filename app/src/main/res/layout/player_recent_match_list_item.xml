@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/playerRecentMatchItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -20,12 +19,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/heroNameTV"
+        android:id="@+id/playerMatchResultTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="TextView"
-        android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@+id/playerHeroIV"
         app:layout_constraintTop_toTopOf="@+id/playerHeroIV" />
 
@@ -34,19 +31,17 @@
         style="@style/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/playerHeroIV"
-        app:layout_constraintStart_toStartOf="@+id/heroNameTV" />
+        app:layout_constraintStart_toStartOf="@+id/playerMatchResultTV" />
 
     <TextView
         android:id="@+id/matchDurationTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="TextView"
         android:textColor="@color/textColor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/heroNameTV" />
+        app:layout_constraintTop_toTopOf="@+id/playerMatchResultTV" />
 
     <TextView
         android:id="@+id/playerLastMatchTimeTV"

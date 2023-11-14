@@ -128,6 +128,7 @@ class MatchDetailFragment : Fragment() {
                         val goldColor = requireContext().getColor(R.color.gold)
                         val expColor = requireContext().getColor(R.color.textBlue)
 
+
                         advantageChip.setOnClickListener {
                             // reset Chart
                             chart.data = null
@@ -266,8 +267,8 @@ class MatchDetailFragment : Fragment() {
 
                 cardView.apply {
                     this.background = playerColors[index].toDrawable()
-                    this.setOnClickListener {
 
+                    this.setOnClickListener {
 
                         // Blende jeweilige Dataset aus, wenn auf die Cardview gedrückt wird
                         when {
@@ -280,16 +281,13 @@ class MatchDetailFragment : Fragment() {
                             }
 
                             !(binding.chart.data.getDataSetByIndex(index).isVisible) -> {
-                                binding.chart.invalidate()
                                 binding.chart.data.getDataSetByIndex(index).isVisible = true
+                                binding.chart.invalidate()
                                 it.background = playerColors[index].toDrawable()
                             }
                         }
-
                     }
                 }
-
-
             }
             binding.chart.legend.isEnabled = false
 
