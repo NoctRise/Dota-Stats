@@ -1,6 +1,7 @@
 package com.abschlussProjekt.dotastats.ui.matchdetail
 
 import android.content.Context
+import android.os.Build
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -130,9 +131,13 @@ class AbilityUpgradeArrAdapter(
                     abilityUpgradeArrLayout.addView(playerNamePlaceHolder)
 
                     playerNamePlaceHolder.gravity = Gravity.CENTER or Gravity.START
-                    playerNamePlaceHolder.text = "Player"
+                    playerNamePlaceHolder.text = context.resources.getStringArray(R.array.match_detail_title)[0]
                     playerNamePlaceHolder.setTextColor(context.getColor(R.color.white))
                     setParams(playerNamePlaceHolder, width = 150)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        playerNamePlaceHolder.tooltipText =
+                            context.resources.getStringArray(R.array.match_detail_tooltip)[0]
+                    }
 
 
                     for (i in (1..maxLevel)) {
@@ -143,6 +148,9 @@ class AbilityUpgradeArrAdapter(
                         setParams(playerNamePlaceHolder, width = 150)
                         levelTV.gravity = Gravity.CENTER
 
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            levelTV.tooltipText = context.getString(R.string.tool_tip_level)
+                        }
 
 
 

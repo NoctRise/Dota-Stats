@@ -4,6 +4,7 @@
     <string name="dire">Dire</string>
     <string name="duration">Duration</string>
 
+    <string name="tool_tip_level">Ability upgraded at this level</string>
 
 
     <string-array name="match_detail_title">
