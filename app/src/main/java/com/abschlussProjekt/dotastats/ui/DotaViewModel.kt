@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.abschlussProjekt.dotastats.data.OpenDotaApi
 import com.abschlussProjekt.dotastats.data.Repository
 import com.abschlussProjekt.dotastats.data.database.getInstance
+import com.abschlussProjekt.dotastats.util.LiveDataEnums
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -54,5 +55,9 @@ class DotaViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun resetError() = repository.resetError()
+
+    fun resetLiveData(enums: LiveDataEnums) {
+        repository.resetLiveData(enums)
+    }
 
 }

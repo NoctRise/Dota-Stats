@@ -17,6 +17,7 @@ import com.abschlussProjekt.dotastats.R
 import com.abschlussProjekt.dotastats.data.datamodels.ProMatchDetail
 import com.abschlussProjekt.dotastats.databinding.FragmentMatchDetailBinding
 import com.abschlussProjekt.dotastats.ui.DotaViewModel
+import com.abschlussProjekt.dotastats.util.LiveDataEnums
 import com.abschlussProjekt.dotastats.util.res_url
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -202,7 +203,7 @@ class MatchDetailFragment : Fragment() {
                     }
 
                     // Blende Loading Screen aus
-                    (requireContext() as MainActivity).showLoadingScreen(false, 750L)
+                    (requireContext() as MainActivity).showLoadingScreen(false, 250L)
                 }
 
 
@@ -214,6 +215,7 @@ class MatchDetailFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        viewModel.resetLiveData(LiveDataEnums.MATCH_DETAIL)
         viewModel.getMatchById(matchId)
     }
 

@@ -12,6 +12,7 @@ import com.abschlussProjekt.dotastats.data.datamodels.ProTeam
 import com.abschlussProjekt.dotastats.data.datamodels.TeamRecentMatch
 import com.abschlussProjekt.dotastats.data.datamodels.constants.Ability
 import com.abschlussProjekt.dotastats.data.datamodels.constants.Item
+import com.abschlussProjekt.dotastats.util.LiveDataEnums
 
 private const val TAG = "Repository"
 
@@ -56,7 +57,6 @@ class Repository(
 
     suspend fun getTeamRecentMatches(teamID: Long) {
         try {
-            _proTeamRecentMatches.postValue(null)
             _proTeamRecentMatches.postValue(apiService.getTeamRecentMatches(teamID))
 
         } catch (ex: Exception) {
@@ -79,7 +79,6 @@ class Repository(
     // Hole MatchDetails per ID
     suspend fun getMatchById(id: Long) {
         try {
-            _detailProMatch.postValue(null)
             val matchDetailAPI = apiService.getMatchById(id)
 
             // Iteriere durch die Playerliste und füge die Heroes und die Abilities hinzu
@@ -145,7 +144,6 @@ class Repository(
 
     suspend fun getPlayerProfileByID(accountID: Long) {
         try {
-            _playerProfile.postValue(null)
 
             val profileAPI = apiService.getPlayerProfileByID(accountID).profile
             val winLose = apiService.getPlayerWinLoseByID(accountID)
@@ -201,4 +199,12 @@ class Repository(
     }
 
     fun resetError() = _errorMessage.postValue(null)
+
+    fun resetLiveData(liveDataEnums: LiveDataEnums) {
+        when (liveDataEnums) {
+            LiveDataEnums.PLAYER -> _playerProfile.value = null
+            LiveDataEnums.MATCH_DETAIL -> _detailProMatch.value = null
+            LiveDataEnums.TEAM_RECENT_MATCH -> _proTeamRecentMatches.value = null
+        }
+    }
 }

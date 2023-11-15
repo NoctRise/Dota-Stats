@@ -12,6 +12,7 @@ import coil.transform.RoundedCornersTransformation
 import com.abschlussProjekt.dotastats.MainActivity
 import com.abschlussProjekt.dotastats.databinding.FragmentPlayerBinding
 import com.abschlussProjekt.dotastats.ui.DotaViewModel
+import com.abschlussProjekt.dotastats.util.LiveDataEnums
 import com.abschlussProjekt.dotastats.util.calcWinRate
 
 
@@ -55,7 +56,7 @@ class PlayerFragment : Fragment() {
                     binding.playerProfileRV.adapter = PlayerAdapter(it.recentMatches)
                 }
 
-                (requireContext() as MainActivity).showLoadingScreen(false, 1000L)
+                (requireContext() as MainActivity).showLoadingScreen(false,250L)
 
             }
         }
@@ -66,7 +67,7 @@ class PlayerFragment : Fragment() {
         super.onStart()
 
         val accountID = requireArguments().getLong("accId")
-
+        viewModel.resetLiveData(LiveDataEnums.PLAYER)
         viewModel.getPlayerProfileByID(accountID)
     }
 }

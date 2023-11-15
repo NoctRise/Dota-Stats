@@ -2,6 +2,9 @@ package com.abschlussProjekt.dotastats.util
 
 
 const val res_url = "https://api.opendota.com"
+
+enum class LiveDataEnums {MATCH_DETAIL, PLAYER, TEAM_RECENT_MATCH}
+
 fun getMatchDuration(seconds: Int): String {
     val hour = seconds / 3600
     val min = if (seconds / 60 > 60) (seconds / 60 - 60) else seconds / 60

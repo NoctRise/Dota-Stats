@@ -12,6 +12,7 @@ import com.abschlussProjekt.dotastats.MainActivity
 import com.abschlussProjekt.dotastats.R
 import com.abschlussProjekt.dotastats.databinding.FragmentTeamProfileBinding
 import com.abschlussProjekt.dotastats.ui.DotaViewModel
+import com.abschlussProjekt.dotastats.util.LiveDataEnums
 import com.abschlussProjekt.dotastats.util.calcWinRate
 
 
@@ -72,6 +73,7 @@ class TeamProfileFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        viewModel.resetLiveData(LiveDataEnums.TEAM_RECENT_MATCH)
         viewModel.getTeamRecentMatches(teamID)
     }
 }
