@@ -69,7 +69,6 @@ to get the latest match results.
 
 
 ## Built with
-- **[Android Architecture Components](https://developer.android.com/topic/architecture)** (ViewModel, LiveData)
 - **[Room Database](https://developer.android.com/training/data-storage/room)** for caching
 - **[Retrofit2](https://github.com/square/retrofit)** for network requests
 - **[Moshi](https://github.com/square/moshi)** for JSON serialization/deserialization
