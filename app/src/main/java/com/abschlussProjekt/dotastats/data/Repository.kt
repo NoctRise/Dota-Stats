@@ -46,6 +46,10 @@ class Repository(
     val errorMessage: LiveData<String?>
         get() = _errorMessage
 
+
+    private val abilities = mutableMapOf<Long, Ability>()
+    private val itemList = mutableMapOf<Long, Item>()
+
     suspend fun getTeams() {
         try {
             _proTeams.postValue(apiService.getTeams())
@@ -84,14 +88,15 @@ class Repository(
             // Iteriere durch die Playerliste und füge die Heroes und die Abilities hinzu
             val playerList = mutableListOf<Player>()
 
-            matchDetailAPI.players.forEach { player ->
-                val hero = database.dotaStatsDao.getHeroByID(player.hero_id)
-                val abilities = mutableMapOf<Long, Ability>()
+            matchDetailAPI.players.forEach { playerApi ->
+
+                val hero = database.dotaStatsDao.getHeroByID(playerApi.hero_id)
+
                 val playerAbilities = mutableListOf<Ability>()
 
-
-                player.ability_upgrades_arr?.forEach { abilityID ->
+                playerApi.ability_upgrades_arr?.forEach { abilityID ->
                     if (!abilities.containsKey(abilityID)) {
+
                         val ability = database.dotaStatsDao.getAbilityByID(abilityID)
                         playerAbilities.add(ability)
                         abilities[abilityID] = ability
@@ -100,24 +105,25 @@ class Repository(
 
 
                 val inventory = getPlayerItems(
-                    player.item_0,
-                    player.item_1,
-                    player.item_2,
-                    player.item_3,
-                    player.item_4,
-                    player.item_5
+                    playerApi.item_0,
+                    playerApi.item_1,
+                    playerApi.item_2,
+                    playerApi.item_3,
+                    playerApi.item_4,
+                    playerApi.item_5
                 )
 
-                val backpack = getPlayerItems(player.backpack0, player.backpack1, player.backpack2)
-                val neutralItem = getPlayerItems(player.item_neutral).first()
+                val backpack =
+                    getPlayerItems(playerApi.backpack0, playerApi.backpack1, playerApi.backpack2)
 
-                playerList.add(
-                    player.toPLayer(
-                        playerAbilities, hero, inventory, backpack, neutralItem
-                    )
+                val neutralItem = getPlayerItems(playerApi.item_neutral).first()
+
+                val player = playerApi.toPLayer(
+                    playerAbilities, hero, inventory, backpack, neutralItem
                 )
+
+                playerList.add(player)
             }
-
 
             _detailProMatch.postValue(matchDetailAPI.toProMatchDetail(playerList))
             Log.e("Match", matchDetailAPI.toProMatchDetail(playerList).toString())
@@ -129,7 +135,6 @@ class Repository(
     }
 
 
-    private val itemList = mutableMapOf<Long, Item>()
     private fun getPlayerItems(vararg items: Long?): List<Item?> {
         val itemList = mutableListOf<Item?>()
 

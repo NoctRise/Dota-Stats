@@ -76,7 +76,7 @@ to get the latest match results.
 - **[MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)** displaying charts
 - **[android-gif-drawable](https://github.com/koral--/android-gif-drawable)** displaying gifs
 - **[Ksp](https://github.com/google/ksp)** annotation processing 
-- **[Material 3](https://m3.material.io)** components for UI
+
 
 
 ## Author
