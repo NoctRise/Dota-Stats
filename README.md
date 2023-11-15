@@ -22,7 +22,7 @@
     <li>
       <a href="#overview">Overview</a></li>
     <li><a href="#features">Features</a></li>
-    <li><a href="#usage">Tech Usage</a></li>
+    <li><a href="#tech-usage">Tech Usage</a></li>
     <li><a href="#built-with">Built with</a></li>
     <li><a href="#author">Author</a></li>
   </ol>
@@ -39,10 +39,25 @@ to get the latest match results.
 
 ## Features
 - **Recent Matches**
-- **Match Details**
-- **Player Profile**
 - **Team Ranking**
 - **Team Profile**
+- **Match Details**
+- **Player Profile**
+
+## Screenshots
+
+<p float="left">
+  <img src="images/home.png" width="200" />
+  <img src="images/team_ranking.png" width="200" />
+  <img src="images/team_profile.png" width="200" />
+  <img src="images/match_detail1.png" width="200" />
+  <img src="images/match_detail2.png" width="200" />
+  <img src="images/match_detail3.png" width="200" />
+  <img src="images/match_detail4.png" width="200" />
+  <img src="images/player_profile.png" width="200" />
+  
+</p>
+
 
 ## Tech Usage
 - **[MVVM Pattern](https://www.geeksforgeeks.org/mvvm-model-view-viewmodel-architecture-pattern-in-android/)**
