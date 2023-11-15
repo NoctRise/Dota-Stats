@@ -21,7 +21,7 @@ import com.abschlussProjekt.dotastats.util.res_url
 
 
 class AbilityUpgradeArrAdapter(
-    private val dataset: List<*>, val context: Context, val maxLevel: Int
+    private val dataset: List<*>, val context: Context, private val maxLevel: Int
 ) :
     RecyclerView.Adapter<AbilityUpgradeArrAdapter.ItemViewHolder>() {
 
@@ -131,7 +131,8 @@ class AbilityUpgradeArrAdapter(
                     abilityUpgradeArrLayout.addView(playerNamePlaceHolder)
 
                     playerNamePlaceHolder.gravity = Gravity.CENTER or Gravity.START
-                    playerNamePlaceHolder.text = context.resources.getStringArray(R.array.match_detail_title)[0]
+                    playerNamePlaceHolder.text =
+                        context.resources.getStringArray(R.array.match_detail_title)[0]
                     playerNamePlaceHolder.setTextColor(context.getColor(R.color.white))
                     setParams(playerNamePlaceHolder, width = 150)
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

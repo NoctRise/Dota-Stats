@@ -3,7 +3,6 @@ package com.abschlussProjekt.dotastats.data.datamodels
 data class ProMatchDetail(
     val match_id: Long,
     val duration: Int,
-    //val pick_bans,
 
     val radiant_score: Int,
     val radiant_team_id: Long?,
