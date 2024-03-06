@@ -8,7 +8,6 @@ import com.squareup.moshi.Json
 data class PlayerAPI(
     val personaname: String?,
     val name: String?,
-    val match_id: Long,
     val account_id: Long?,
     val isRadiant: Boolean,
     val player_slot: Int,
@@ -55,7 +54,6 @@ data class PlayerAPI(
     ) = Player(
         personaname,
         name,
-        match_id,
         account_id,
         isRadiant,
         player_slot,

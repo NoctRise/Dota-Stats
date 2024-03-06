@@ -1,7 +1,7 @@
 package com.abschlussProjekt.dotastats.util
 
 
-const val res_url = "https://api.opendota.com"
+const val res_url = "https://cdn.cloudflare.steamstatic.com"
 
 enum class LiveDataEnums {MATCH_DETAIL, PLAYER, TEAM_RECENT_MATCH}
 
